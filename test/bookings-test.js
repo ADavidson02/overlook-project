@@ -16,9 +16,10 @@ describe ('Bookings', () => {
       "roomNumber":12,
       "roomServiceCharges":[]
     })
-    
+  })
+  
     it('should be an instance of booking', () => {
       expect(booking).to.be.an.instanceof(Bookings);
-    })
+    
   })
 })

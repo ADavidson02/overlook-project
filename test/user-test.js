@@ -1,13 +1,11 @@
 import { expect } from 'chai';
 
 import User from '../src/user';
-import TestRepo from '../src/test-repo'
 
 describe('User', () => {
   let user1
   
   beforeEach(() => {
-    
     user1 = new User({"id":1, "name":"Leatha Ullrich"});
     
   })
