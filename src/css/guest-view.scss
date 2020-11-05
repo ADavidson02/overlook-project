@@ -1,0 +1,18 @@
+$text-color: #414141;
+
+.hidden {
+  display: none;
+}
+
+.new-reservation-button,
+.home-button {
+  background-color: #F2D388;
+  border: none;
+  color: $text-color;
+  border-radius: 4px;
+  padding: 0.5em;
+  margin-top: .5em;
+  margin-left: 2em;
+}
+
+

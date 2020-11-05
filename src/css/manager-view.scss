@@ -1,0 +1,20 @@
+$text-color: #FFFFFF;
+
+
+.today {
+  size: 23em;
+}
+.manager-dashboard,
+.manager {
+  color: $text-color;
+  display: block;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: -8px 2px 9px 8px;
+}
+
+
+.hidden {
+  display: none;
+}

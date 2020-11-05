@@ -1,7 +1,110 @@
 /* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
-;
+$primary-background: #A7D2CB;
+$text-color: #414141;
+$body-font-family: 'Open Sans';
+
+
+nav {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  left: 0px; 
+  right: 0px;
+}
 
 body {
-  background: $primary-background;
+  background: #A7D2CB;
+  background-image: url("https://image.freepik.com/free-vector/vector-floral-3d-seamless-pattern-background-christmas-invitation-cards-decoration_1284-41314.jpg");
+  background-position: repeat;
+  font-family: $body-font-family;
+  margin: 38px 0px 0px 0px;
+  
 }
+
+.title {
+  padding: 12em, 0, 0, 0;
+  color: #414141;
+  display: flex;
+  justify-content: center;
+  size: 20em;
+}
+
+nav ul {
+  background: #874C62;
+  width: 100%;
+  color: $text-color;
+  margin: 0;
+  padding: 0.5em;
+}
+
+nav li {
+  display: inline;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 40px;
+  margin-bottom: 10em;
+}
+
+.center {
+  background-color:  #A7D2CB;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  width: 80%;
+  margin: 2em 0 0 1em;
+  -webkit-box-shadow: 0 10px 6px -6px #777;
+  -moz-box-shadow: 0 10px 6px -6px #777;
+  box-shadow: 0 10px 6px -6px #777;
+}
+
+.hidden {
+  display: none;
+}
+
+
+
+.login {
+  margin: 8em;
+  color: $text-color;
+}
+
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  size: 20em;
+}
+
+.enter {
+  background-color: #874C62;
+  border: none;
+  color: $text-color;
+  border-radius: 4px;
+  padding: 0.5em;
+  margin-top: .5em;
+}
+
+.password-error,
+.username-error {
+  color: #980008;
+  text: 4em;
+}
+
+.turing-logo {
+  display: block;
+  size: 10em;
+}
+
+
+
+
+
+
+
+
+
+
