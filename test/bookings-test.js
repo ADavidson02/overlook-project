@@ -84,6 +84,6 @@ describe ('Booking', () => {
   })
   
   it('should return the percent of rooms booked for a date', () => {
-     expect(booking.occupancyTotal("2020/01/10")).to.equal('25%');
+     expect(booking.occupancyTotal("2020/01/10")).to.equal('20%');
   })
 })
