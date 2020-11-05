@@ -73,7 +73,7 @@ describe('Room', () => {
   })
   
   it('should have an error if no rooms are available when filtered', () => {
-    expect(room.filterType('junior suite')).to.equal()
+    expect(room.filterType('junior suite')).to.equal("We apologize no rooms match your search, please alter your search and try again")
   })
   
 })

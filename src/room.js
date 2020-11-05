@@ -12,12 +12,17 @@ class Room {
   }
   
   filterType(input) {
-    return roomData.reduce((results, room) => {
+    let choices = roomData.reduce((results, room) => {
       if(room.roomType === input) {
         results.push(room)
       }
-      return results
+        return results
     }, [])
+    if(choices.length > 0) {
+      return choices
+    } else {
+      return "We apologize no rooms match your search, please alter your search and try again"
+    }
   }
 }
  export default Room;
