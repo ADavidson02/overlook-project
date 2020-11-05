@@ -26,7 +26,7 @@ describe('User', () => {
   })
   
   it('should return a list of all bookings for a user', () => {
-    expect(user.findBookings(user43.id)).to.equal([
+    expect(user.findBookings(user43.id)).to.deep.equal([
     {
       id: '5fwrgu4i7k55hl6t5',
       userID: 43,
@@ -36,4 +36,7 @@ describe('User', () => {
     }])
   })
   
+  it('should return a total a user has spent on rooms', () => {
+    expect(user.findTotalSpent(user43.id)).to.equal('$327.24')
+  })
 })

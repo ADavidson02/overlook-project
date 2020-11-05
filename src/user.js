@@ -1,4 +1,5 @@
 import bookingsData from '../test/sample-bookings-data.js';
+import roomData from '../test/sample-room-data.js';
 import userData from '../test/sample-user-data.js';
 
 class User  {
@@ -12,6 +13,19 @@ class User  {
       return booking.userID === id
     })
     return list
+  }
+  
+  findTotalSpent(id) {
+    let total = 0;
+    let userBookings = this.findBookings(id)
+    userBookings.forEach(booking => {
+      roomData.forEach(data => {
+        if(booking.roomNumber === data.number) {
+          total += data.costPerNight
+        }
+      })
+    })
+    return `$${total}`;
   }
 }
 
