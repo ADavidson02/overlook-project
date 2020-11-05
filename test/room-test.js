@@ -71,4 +71,9 @@ describe('Room', () => {
     }
   ])
   })
+  
+  it('should have an error if no rooms are available when filtered', () => {
+    expect(room.filterType('junior suite')).to.equal()
+  })
+  
 })
