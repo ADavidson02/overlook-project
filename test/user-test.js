@@ -20,6 +20,14 @@ describe('User', () => {
     expect(user1).to.be.an.instanceof(User);
   })
   
+  it('user should have an id', () => {
+    expect(user43.id).to.equal(43);
+  })
+  
+  it('user should have a name', () => {
+    expect(user20.name).to.equal('Keon Kirlin');
+  })
+  
   it('should take a user data object', () => {
       expect(user1.id).to.equal(1)
       expect(user1.name).to.equal('Leatha Ullrich');
@@ -33,10 +41,10 @@ describe('User', () => {
       date: '2020/01/24',
       roomNumber: 24,
       roomServiceCharges: []
-    }])
+    }]);
   })
   
   it('should return a total a user has spent on rooms', () => {
-    expect(user.findTotalSpent(user43.id)).to.equal('$327.24')
+    expect(user.findTotalSpent(user43.id)).to.equal('$327.24');
   })
 })
