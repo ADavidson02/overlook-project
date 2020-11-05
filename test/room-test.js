@@ -51,6 +51,31 @@ describe('Room', () => {
     expect(room1).to.be.an.instanceof(Room);
   })
   
+  it('should have a room number', () => {
+    expect(roomData[2].number).to.equal(3);
+  })
+  
+  it('should have a room type', () => {
+    expect(roomData[0].roomType).to.equal("residential suite");
+  })
+  
+  it('should have a boolen for if room has a bidet', () => {
+    expect(roomData[1].bidet).to.equal(false);
+    expect(roomData[0].bidet).to.equal(true);
+  })
+  
+  it('should have a bedsize', () => {
+    expect(roomData[2].bedSize).to.equal('king');
+  })
+  
+  it('should have a number of beds', () => {
+    expect(roomData[1].numBeds).to.equal(2);
+  })
+  
+  it('should have a price per night', () => {
+    expect(roomData[2].costPerNight).to.equal(491.14)
+  })
+  
   it('should be able to filter room by type', () => {
     expect(room.filterType('single room')).to.deep.equal([
     {
