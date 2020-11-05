@@ -1,4 +1,4 @@
-import roomData from '../test/test-data.js';
+import roomData from '../test/sample-room-data.js';
 
 class Room {
   constructor (roomDetails) {
@@ -16,7 +16,6 @@ class Room {
       if(room.roomType === input) {
         results.push(room)
       }
-      console.log(results)
       return results
     }, [])
   }
