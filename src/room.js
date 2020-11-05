@@ -1,4 +1,4 @@
-
+import roomData from '../test/test-data.js';
 
 class Room {
   constructor (roomDetails) {
@@ -8,17 +8,17 @@ class Room {
     this.bedSize = roomDetails.bedSize;
     this.numBeds = roomDetails.numBeds;
     this.costPerNight = roomDetails.costPerNight;
+    this.roomData = roomData;
   }
-  // 
-  // filterType(input) {
-  //   console.log(input)
-  //   roomData.reduce((results, room) => {
-  //     if(room.roomType === input) {
-  //       results.push(room.number)
-  //     }
-  //     console.log(results)
-  //     return results
-  //   }, [])
-  // }
+  
+  filterType(input) {
+    return roomData.reduce((results, room) => {
+      if(room.roomType === input) {
+        results.push(room)
+      }
+      console.log(results)
+      return results
+    }, [])
+  }
 }
  export default Room;
