@@ -79,8 +79,11 @@ describe ('Booking', () => {
   })
   
   it('should return the total revenue for a date', () => {
-    expect(booking.totalRevenue("2020/02/16")).to.equal('$231.46')
-    expect(booking.totalRevenue("2020/04/23")).to.equal('$0')
+    expect(booking.totalRevenue("2020/02/16")).to.equal('$231.46');
+    expect(booking.totalRevenue("2020/04/23")).to.equal('$0');
   })
   
+  it('should return the percent of rooms booked for a date', () => {
+     expect(booking.occupancyTotal("2020/01/10")).to.equal('25%');
+  })
 })

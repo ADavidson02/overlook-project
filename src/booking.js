@@ -33,6 +33,14 @@ class Booking {
     return booking.date === date
     })
   }
+  
+  occupancyTotal(date) {
+    let takenRooms = this.occupiedRooms(date)
+    let total = takenRooms.length / roomData.length 
+    let final = (total * 100)
+    return `${final}%`
+  }
+  
 }
 
 export default Booking;
