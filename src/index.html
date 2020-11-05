@@ -7,37 +7,46 @@
   </head>
   <body>
     <header>
-      <h1>Overlook Hotel</h1>
+      <h1 class="title">Overlook Hotel</h1>
       <nav>
-        <ul>
-          <li><a href="">Home</a></li>
+        <ul class="navigation">
+          <button class="home-button">Home</button>
+          <button class="new-reservation-button" >New Reservation</button>
+        </ul>
+      </nav>
     </header>
-    <section class="login">
-      <p>Username:
-        <input type="text" name="username" maxlength="10"/>
-      </p>
-      <p>Password:
-        <input type="password" name="password"maxlength="12"/>
-      </p>
-    </section>
-    <section class="manager">
-      <wrapper "manager-dashboard">
-        <p>Total Rooms available for today</p>
-        <p>Total revenue for today</p> 
-        <p>Percentage of rooms available for today</p>
+  <wrapper class="center">
+    <div class="login hidden">
+      <h2 class="username">Username:</h2>
+        <input class="" type="text" name="username" maxlength="10"/>
+        <p class="username-error hidden">Username does not match</p>
+      <h2 class="password">Password:</h2>
+        <input class="" type="password" name="password"maxlength="12"/>
+        <p class="password-error hidden">Password does not match</p>
+      <button class="enter">Log In</button>
+    </div>
+    <div class="manager hidden">
+      <wrapper "manager-dashboard hidden">
+        <p class="today">Today's totals</p>
+        <p class="manager">Total Rooms available for today</p>
+        <p class="manager">Total revenue for today</p> 
+        <p class="manager">Percentage of rooms available for today</p>
       </wrapper>
       <wrapper>
-        <p>User Name:</p>
+        <p class="manager hidden">User Name:</p>
       </wrapper>
-    </section>
-    <section class="user">
+    </div>
+    <div class="user">
       <wrapper class="user-dashboard">
-        <p>My Bookings:</p>
-        <p>Total spent</p>
+        <p class="guest">My Bookings:</p>
+        <p class="guest">Total spent</p>
       </wrapper>
       <wrapper class="user-search-results">
       </wrapper>
-    <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
+    </div>
+    <!-- <footer>
+      <img class="turing" src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
+    </footer> -->
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   </body>
 </html>
