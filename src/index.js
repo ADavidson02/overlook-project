@@ -40,7 +40,7 @@ const passwordCaptured = document.querySelector('.password-input');
 const usernameError = document.querySelector('.username-error');
 const passwordError = document.querySelector('.password-error');
 const guestViews = document.querySelector('.user-view')
-const managerViews= document.querySelector('.manager-view');
+const managerViews = document.querySelector('.manager-view');
 // const managerDashboard =  document.querySelector('.manager-dashboard');
 
 // const enterButton = document.querySelector('.enter');
@@ -64,10 +64,12 @@ Promise.all([recievedGuestData, recievedRoomData, recievedBookingsData])
 function windowOnClick(event) {
   if (event.target.classList.contains('manager-login')) {
     checkManageLogin(usernameCaptured, passwordCaptured);
-    runManger();
+    let today = getTodaysDate() 
+    runManger(today);
   }
-  if (event.target.classList.contains('enter')) {
-    checkGuestLogin();
+  if (event.target.classList.contains('guest-login')) {
+    checkGuestLogin(usernameCaptured, passwordCaptured);
+    runGuest()
   }
 }
 // 
@@ -100,15 +102,26 @@ function runManger() {
   managerViews.classList.remove('hidden');
   // managerDashboard.classList.remove('hidden');
 }
-function checkGuestLogin(usernameInput, passwordInput) {
-  let username = usernameInput.value.toLowerCase();
-  let password = passwordInput.value.toLowerCase();
-  if(username !== 'customer50') {
+
+function checkGuestLogin(inputName, guestPassword) {
+  usernameError.classList.add('hidden');
+  passwordError.classList.add('hidden');
+  let checkedUsername = inputName.value;
+  let loweredGuestUsername = lowerCaseInput(checkedUsername)
+  let checkedPassword = guestPassword.value;
+  let loweredPassword = lowerCaseInput(checkedPassword);
+  if(!loweredGuestUsername.includes('customer')) {
     usernameError.classList.remove('hidden')
   }
-  if(password !== 'overlook2020') {
+  if(loweredPassword !== 'overlook2020') {
     passwordError.classList.remove('hidden')
   }
+}
+
+function runGuest() {
+  loginPage.classList.add('hidden');
+  guestViews.classList.remove('hidden');
+  managerViews.classList.add('hidden');
 }
 
 function getTodaysDate() {
