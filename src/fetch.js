@@ -1,24 +1,24 @@
 let requests = {
   fetchGuestData() {
-    return fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/users/users");
+    return fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/users/users")
       .then(response => response.json())
       .then(data => data.guestData)
       .catch(error => consle.log(error))
-  }
+  },
   
   fetchRoomsData() {
-    return fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/rooms/rooms");
+    return fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/rooms/rooms")
     .then(response => response.json())
     .then(data => data.roomsData)
     .catch(error => consle.log(error))
-  }
+  },
   
   fetchBookingsData() {
-    return fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings");
+    return fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings")
     .then(response => response.json())
     .then(data => data.bookingsData)
     .catch(error => consle.log(error))
-  }
+  },
   
   postNewBooking() {
     return fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
@@ -35,9 +35,7 @@ let requests = {
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.log(error))
-  },
-  
-  
+  },  
 }
 
 export default requests;
