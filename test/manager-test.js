@@ -57,5 +57,10 @@ describe('Manager', () => {
     expect(manager.findGuest("Rocio ScHuster")).to.deep.equal({ id: 2, name: 'Rocio Schuster' })
   })
   
+  it('should have a message when no user is found', () => {
+    expect(manager.findGuest("Scooby Doo")).to.deep.equal("Sorry no user was found with the name Scooby Doo")
+  })
+  
+
   
 })

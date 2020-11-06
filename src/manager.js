@@ -14,7 +14,11 @@ class Manager {
       return user
     }
    })
-   return foundUser
+   if(foundUser !== undefined) {
+     return foundUser
+   } else {
+     return `Sorry no user was found with the name ${name}`
+   }
   }
 
   
