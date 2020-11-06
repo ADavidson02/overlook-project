@@ -1,6 +1,8 @@
 import userData from '../test/sample-user-data.js';
 import bookingsData from '../test/sample-bookings-data.js';
 import roomData from '../test/sample-room-data.js';
+import User from '../src/user';
+let user = new User(userData);
 
 class Manager {
   constructor() {
@@ -21,7 +23,11 @@ class Manager {
    }
   }
 
-  
+  findGuestBookings(name) {
+  let foundGuest = this.findGuest(name)
+  let foundBookings = user.findBookings(foundGuest.id)
+  return foundBookings
+  }
 }
 
 export default Manager;

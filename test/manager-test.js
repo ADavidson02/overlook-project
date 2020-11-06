@@ -61,6 +61,16 @@ describe('Manager', () => {
     expect(manager.findGuest("Scooby Doo")).to.deep.equal("Sorry no user was found with the name Scooby Doo")
   })
   
-
+  it('should find all booking for searched user', () => {
+    expect(manager.findGuestBookings("Keon Kirlin")).to.deep.equal([
+    {
+      id: '5fwrgu4i7k55hl6t7',
+      userID: 20,
+      date: '2020/02/16',
+      roomNumber: 7,
+      roomServiceCharges: []
+    }
+    ])
+  })
   
 })
