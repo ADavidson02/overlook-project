@@ -9,21 +9,22 @@
     <header>
       <h1 class="title">Overlook Hotel</h1>
       <nav>
-        <ul class="navigation">
+        <ul class="navigation hidden">
           <button class="home-button">Home</button>
           <button class="new-reservation-button" >New Reservation</button>
         </ul>
       </nav>
     </header>
   <wrapper class="center">
-    <div class="login hidden">
-      <h2 class="username">Username:</h2>
-        <input class="" type="text" name="username" maxlength="10"/>
+    <div class="login">
+      <h2 class="username-heading">Username:</h2>
+        <input class="username-input" type="text" name="username" maxlength="10"/>
         <p class="username-error hidden">Username does not match</p>
-      <h2 class="password">Password:</h2>
-        <input class="" type="password" name="password"maxlength="12"/>
+      <h2 class="password-heading">Password:</h2>
+        <input class="" class="password-input" type="password" name="password" maxlength="12"/>
         <p class="password-error hidden">Password does not match</p>
       <button class="enter">Log In</button>
+      <button class="manager-login">Manager Log In</button> 
     </div>
     <div class="manager hidden">
       <wrapper "manager-dashboard hidden">
@@ -36,7 +37,7 @@
         <p class="manager hidden">User Name:</p>
       </wrapper>
     </div>
-    <div class="user">
+    <div class="user hidden">
       <wrapper class="user-dashboard">
         <p class="guest">My Bookings:</p>
         <p class="guest">Total spent</p>
