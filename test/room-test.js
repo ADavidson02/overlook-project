@@ -94,11 +94,32 @@ describe('Room', () => {
       numBeds: 1,
       costPerNight: 429.44
     }
-  ])
+    ])
   })
   
   it('should have an error if no rooms are available when filtered', () => {
     expect(room.filterType('junior suite')).to.equal("We apologize no rooms match your search, please alter your search and try again")
+  })
+  
+  it('should check input', ()  => {
+    expect(room.filterType('SUITE')).to.deep.equal([
+    {
+      number: 2,
+      roomType: 'suite',
+      bidet: false,
+      bedSize: 'full',
+      numBeds: 2,
+      costPerNight: 477.38
+    },
+    {
+      number: 24,
+      roomType: 'suite',
+      bidet: false,
+      bedSize: 'queen',
+      numBeds: 1,
+      costPerNight: 327.24
+    }
+  ])
   })
   
 })

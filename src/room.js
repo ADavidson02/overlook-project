@@ -12,8 +12,9 @@ class Room {
   }
   
   filterType(input) {
+    let checkInput = input.toLowerCase()
     let choices = roomData.reduce((results, room) => {
-      if(room.roomType === input) {
+      if(room.roomType === checkInput) {
         results.push(room)
       }
         return results
