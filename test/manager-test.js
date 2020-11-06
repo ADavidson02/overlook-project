@@ -73,4 +73,8 @@ describe('Manager', () => {
     ])
   })
   
+  it('should return the amount a user has spent', () => {
+    expect(manager.amountSpent("Earline Hamill")).to.equal('$327.24')
+  })
+  
 })

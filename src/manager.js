@@ -28,6 +28,13 @@ class Manager {
   let foundBookings = user.findBookings(foundGuest.id)
   return foundBookings
   }
+  
+  amountSpent(name) {
+    let foundGuest = this.findGuest(name)
+    let foundTotal = user.findTotalSpent(foundGuest.id)
+    return foundTotal
+  } 
 }
+
 
 export default Manager;
