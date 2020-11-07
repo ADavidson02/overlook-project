@@ -33,9 +33,10 @@ class Booking {
     })
   }
   
-  occupancyTotal(date) {
+  occupancyTotal(date, data) {
+    let room = new Room(data)
     let takenRooms = this.occupiedRooms(date)
-    let total = takenRooms.length / roomData.length 
+    let total = takenRooms.length / room.roomData.rooms.length
     let final = (total * 100)
     return `${final}%`
   }

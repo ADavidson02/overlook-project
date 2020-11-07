@@ -34,6 +34,7 @@ const guestViews = document.querySelector('.user-view')
 const managerViews = document.querySelector('.manager-view');
 let roomsAvailableTonight = document.querySelector('.available-tonight');
 let hotelRevenueTonight = document.querySelector('.hotel-revenue');
+let hotelOccupancyTonight = document.querySelector('.hotel-occupancy');
 // const managerDashboard =  document.querySelector('.manager-dashboard');
 
 // const enterButton = document.querySelector('.enter');
@@ -70,6 +71,7 @@ function windowOnClick(event) {
     runManger(today);
     todaysAvailable(today);
     todaysTotalRevenue(today);
+    todaysOccupancy(today);
   }
   if (event.target.classList.contains('guest-login')) {
     startApp() 
@@ -157,5 +159,17 @@ function todaysTotalRevenue(date) {
   </div>
   `
   hotelRevenueTonight.insertAdjacentHTML('beforeend', todaysTotal);
+}
+
+
+function todaysOccupancy(date) {
+  let todaysPercentage = todaysBookings.occupancyTotal("2020/01/24", roomsData);
+  let todaysPercent = 
+  `
+  <div class="todays-occupancy">
+  <h2>${todaysPercentage}</h2>
+  </div>
+  `
+  hotelOccupancyTonight.insertAdjacentHTML('beforeend', todaysPercent)
 }
 
