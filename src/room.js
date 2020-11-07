@@ -1,13 +1,15 @@
-import roomData from '../test/sample-room-data.js';
+// import roomData from '../test/sample-room-data.js';
+// import roomData from './scripts.js'
+// import roomData from './fetch.js'
 
 class Room {
-  constructor (roomDetails) {
-    this.number = roomDetails.number;
-    this.roomType = roomDetails.roomType;
-    this.bidet = roomDetails.bidet;
-    this.bedSize = roomDetails.bedSize;
-    this.numBeds = roomDetails.numBeds;
-    this.costPerNight = roomDetails.costPerNight;
+  constructor (roomData) {
+    // this.number = roomData.number;
+    // this.roomType = roomData.roomType;
+    // this.bidet = roomData.bidet;
+    // this.bedSize = roomData.bedSize;
+    // this.numBeds = roomData.numBeds;
+    // this.costPerNight = roomData.costPerNight;
     this.roomData = roomData;
   }
   
@@ -26,4 +28,4 @@ class Room {
     }
   }
 }
- export default Room;
+export default Room;

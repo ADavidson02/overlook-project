@@ -10,10 +10,6 @@ import './css/guest-view.scss';
 // import './index.html'
 import './images/turing-logo.png'
 
-
-
-
-
 console.log('This is the JavaScript entry file - your code begins here.');
 
 import User from '../src/user';
@@ -25,12 +21,7 @@ import './css/base.scss';
 import './css/manager-view.scss';
 import './css/guest-view.scss';
 
-
-
-
-
 window.addEventListener('click', windowOnClick);
-
 const recievedGuestData = requests.fetchGuestData();
 const recievedRoomData = requests.fetchRoomsData();
 const recievedBookingsData = requests.fetchBookingsData();
@@ -41,6 +32,7 @@ const usernameError = document.querySelector('.username-error');
 const passwordError = document.querySelector('.password-error');
 const guestViews = document.querySelector('.user-view')
 const managerViews = document.querySelector('.manager-view');
+let roomsAvailableTonight = document.querySelector('.available-tonight')
 // const managerDashboard =  document.querySelector('.manager-dashboard');
 
 // const enterButton = document.querySelector('.enter');
@@ -49,25 +41,36 @@ const managerViews = document.querySelector('.manager-view');
 // managerLoginButton.addEventListener('click', checkManageLogin)
 
 let guestData;
-let roomData;
+let roomsData;
 let bookingsData;
 
 Promise.all([recievedGuestData, recievedRoomData, recievedBookingsData])
   .then(value => {
     guestData = value[0];
-    roomData = value[1];
+    roomsData = value[1];
     bookingsData = value[2];
   })
-  
-  
-  
+
+let guestInformation
+let todaysRoomData 
+let todaysBookings 
+   
+function startApp()  {
+  guestInformation = new User(guestData.users[1]);
+  todaysBookings = new Booking(bookingsData);
+  todaysRoomData = new Room(roomsData);
+}
+
 function windowOnClick(event) {
   if (event.target.classList.contains('manager-login')) {
+    startApp() 
     checkManageLogin(usernameCaptured, passwordCaptured);
     let today = getTodaysDate() 
     runManger(today);
+    todaysAvailable(today);
   }
   if (event.target.classList.contains('guest-login')) {
+    startApp() 
     checkGuestLogin(usernameCaptured, passwordCaptured);
     runGuest()
   }
@@ -84,10 +87,10 @@ function checkManageLogin(inputName, managerPassword) {
   let loweredUsername = lowerCaseInput(checkedUsername)
   let checkedPassword = managerPassword.value;
   let loweredPassword = lowerCaseInput(checkedPassword);
-  if(loweredUsername !== 'manager') {
+  if(loweredUsername !== 'manager' || loweredUsername === '' ) {
     usernameError.classList.remove('hidden')
   }
-  if(loweredPassword !== 'overlook2020') {
+  if(loweredPassword !== 'overlook2020' || loweredPassword === '') {
     passwordError.classList.remove('hidden')
   }
 }
@@ -132,4 +135,14 @@ function getTodaysDate() {
   return today = yyyy + '/' + mm + '/' + dd;
 }
 
+function todaysAvailable(date) {
+  let emptyRooms = todaysBookings.availableRooms(date);
+  let roomCount = 
+  `
+  <div class="today-available">
+  <h2>${emptyRooms}</h2>
+  </div>
+  `
+  roomsAvailableTonight.insertAdjacentHTML('beforeend', roomCount)
+}
 

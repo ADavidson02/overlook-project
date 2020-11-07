@@ -1,19 +1,22 @@
-import bookingsData from '../test/sample-bookings-data.js';
-import roomData from '../test/sample-room-data.js'
+// import bookingsData from '../test/sample-bookings-data.js';
+// import roomData from '../test/sample-room-data.js'
+// import bookingsData from './scripts.js'
+// import bookingsData from './fetch.js'
 class Booking {
-  constructor(bookingDetails) {
-    this.id = bookingDetails.id;
-    this.userID = bookingDetails.userID;
-    this.date = bookingDetails.date;
-    this.roomNumber = bookingDetails.roomNumber;
-    this.roomServiceCharges = bookingDetails.roomServiceCharges
+  constructor(booking) {
+    // this.id = bookingObj.id;
+    // this.userID = bookingObj.userID;
+    // this.date = bookingObj.date;
+    // this.roomNumber = bookingObj.roomNumber;
+    // this.roomServiceCharges = bookingObj.roomServiceCharges;
+    this.booking = booking;
   }
   
   availableRooms(date) {
-    let available = bookingsData.filter(booking => {
-    return booking.date !== date
+    let occupiedRoom = this.booking.bookings.filter(book => {
+    return book.date === date 
     })
-    return available
+    return (25 - occupiedRoom.length)
   }
   
   totalRevenue(date) {
@@ -43,4 +46,4 @@ class Booking {
   
 }
 
-export default Booking;
+  export default Booking; 
