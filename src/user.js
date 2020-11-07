@@ -1,3 +1,4 @@
+import Booking from '../src/booking';
 import bookingsData from '../test/sample-bookings-data.js';
 import roomData from '../test/sample-room-data.js';
 import guestData from '../test/sample-user-data.js';
@@ -7,10 +8,14 @@ class User  {
     this.guestData = guestData;
   }
   
-  findBookings(id) {
-    let list = bookingsData.filter(booking => {
+  findBookings(id, data) {
+    console.log('id', id)
+    let newBooking = new Booking(data)
+    // console.log(newBooking.booking.bookings)
+    let list = newBooking.booking.bookings.filter(booking => {
       return booking.userID === id
     })
+    console.log(list)
     return list
   }
   

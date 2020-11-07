@@ -35,7 +35,9 @@ const managerViews = document.querySelector('.manager-view');
 let roomsAvailableTonight = document.querySelector('.available-tonight');
 let hotelRevenueTonight = document.querySelector('.hotel-revenue');
 let hotelOccupancyTonight = document.querySelector('.hotel-occupancy');
-let managerLoginButton = document.querySelector('.manager-login');
+// let managerLoginButton = document.querySelector('.manager-login');
+let guestBookingDisplay = document.querySelector('.guest-bookings-display');
+
 // const managerDashboard =  document.querySelector('.manager-dashboard');
 
 // const enterButton = document.querySelector('.enter');
@@ -147,10 +149,11 @@ function checkGuestUsername(inputName) {
 } 
 
 function runGuest() {
-  debugger
   loginPage.classList.add('hidden');
   guestViews.classList.remove('hidden');
   managerViews.classList.add('hidden');
+  let userNumber = usernameCaptured.value.slice(8,10)
+  loadGuestDashboard(+userNumber)
 }
 
 function getTodaysDate() {
@@ -162,7 +165,6 @@ function getTodaysDate() {
 }
 
 function todaysAvailable(date) {
-  console.log(todaysBookings)
   let emptyRooms = todaysBookings.availableRooms(date);
   let roomCount = 
   `
@@ -195,4 +197,44 @@ function todaysOccupancy(date) {
   `
   hotelOccupancyTonight.insertAdjacentHTML('beforeend', todaysPercent)
 }
+
+
+function loadGuestDashboard(id) {
+  let allGuestBookings = guestInformation.findBookings(id, bookingsData)
+  let sortedDates = arrangerByDate(allGuestBookings)
+  let allDetails = getDetails(sortedDates)
+  allDetails.forEach(bookingInfo=> {
+    let guestBookings = 
+    `
+    <div class="current-guest-bookings">
+      <h3>Date: ${bookingInfo.date}</h3>
+      <p>Room type: ${bookingInfo.roomInfo.roomType}</p>
+      <p>Bidet: ${bookingInfo.roomInfo.bidet}</p>
+      <p>Bedsize: ${bookingInfo.roomInfo.bedSize}</p>
+      <p>number of beds: ${bookingInfo.roomInfo.numBeds}</p>
+      <p>cost per night: ${bookingInfo.roomInfo.costPerNight}</p>
+    </div>
+    `
+    guestBookingDisplay.insertAdjacentHTML('beforeend', guestBookings)
+  });
+}
+
+function arrangerByDate(guestReservations) {
+  return guestReservations.sort((a,b) => {
+    return new Date(b.date) - new Date(a.date)
+  })
+}
+
+
+function getDetails(data) {
+  return data.reduce((allDetails, reservation) => {
+    roomsData.rooms.forEach(room => {
+      if(room.number === reservation.roomNumber) {
+        allDetails.push({'date':reservation.date, 'roomInfo': room})
+      }
+    })
+    return allDetails
+  }, [])
+}
+
 
