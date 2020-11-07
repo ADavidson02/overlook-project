@@ -1,11 +1,9 @@
-// import bookingsData from '../test/sample-bookings-data.js';
-// import roomData from '../test/sample-room-data.js';
-// // import guestData from '../test/sample-user-data.js';
-// import guestData from './index.js'
+import bookingsData from '../test/sample-bookings-data.js';
+import roomData from '../test/sample-room-data.js';
+import guestData from '../test/sample-user-data.js';
+
 class User  {
   constructor (guestData){
-    // this.id = guestData.id;
-    // this.name = guestData.name;
     this.guestData = guestData;
   }
   

@@ -1,14 +1,9 @@
-// import bookingsData from '../test/sample-bookings-data.js';
-// import roomData from '../test/sample-room-data.js'
-// import bookingsData from './scripts.js'
-// import bookingsData from './fetch.js'
+import bookingsData from '../test/sample-bookings-data.js';
+import roomData from '../test/sample-room-data.js'
+import Room from '../src/room';
+
 class Booking {
   constructor(booking) {
-    // this.id = bookingObj.id;
-    // this.userID = bookingObj.userID;
-    // this.date = bookingObj.date;
-    // this.roomNumber = bookingObj.roomNumber;
-    // this.roomServiceCharges = bookingObj.roomServiceCharges;
     this.booking = booking;
   }
   
@@ -19,21 +14,22 @@ class Booking {
     return (25 - occupiedRoom.length)
   }
   
-  totalRevenue(date) {
+  totalRevenue(passedInDate, data) {
+    let room = new Room(data)
     let total = 0
-    let list = this.occupiedRooms(date);
-     list.forEach(room => {
-      roomData.forEach(data => {
-        if(room.roomNumber === data.number)
-        total += data.costPerNight
+    let list = this.occupiedRooms(passedInDate);
+     list.forEach(reservation => {
+      room.roomData.rooms.forEach(hotelRoom => {
+        if(hotelRoom.number === reservation.roomNumber)
+        total += hotelRoom.costPerNight
       });
     });
     return `$${total}`;
   }
 
-  occupiedRooms(date) {
-    return bookingsData.filter(booking => {
-    return booking.date === date
+  occupiedRooms(passedInDate) {
+    return this.booking.bookings.filter(booking => {
+    return booking.date === passedInDate
     })
   }
   

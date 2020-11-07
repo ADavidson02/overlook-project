@@ -32,7 +32,8 @@ const usernameError = document.querySelector('.username-error');
 const passwordError = document.querySelector('.password-error');
 const guestViews = document.querySelector('.user-view')
 const managerViews = document.querySelector('.manager-view');
-let roomsAvailableTonight = document.querySelector('.available-tonight')
+let roomsAvailableTonight = document.querySelector('.available-tonight');
+let hotelRevenueTonight = document.querySelector('.hotel-revenue');
 // const managerDashboard =  document.querySelector('.manager-dashboard');
 
 // const enterButton = document.querySelector('.enter');
@@ -68,6 +69,7 @@ function windowOnClick(event) {
     let today = getTodaysDate() 
     runManger(today);
     todaysAvailable(today);
+    todaysTotalRevenue(today);
   }
   if (event.target.classList.contains('guest-login')) {
     startApp() 
@@ -144,5 +146,16 @@ function todaysAvailable(date) {
   </div>
   `
   roomsAvailableTonight.insertAdjacentHTML('beforeend', roomCount)
+}
+
+function todaysTotalRevenue(date) {
+  let total = todaysBookings.totalRevenue(date, roomsData);
+  let todaysTotal = 
+  ` 
+  <div class="todays-total">
+  <h2>${total}</h2>
+  </div>
+  `
+  hotelRevenueTonight.insertAdjacentHTML('beforeend', todaysTotal);
 }
 

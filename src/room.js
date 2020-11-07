@@ -1,15 +1,8 @@
-// import roomData from '../test/sample-room-data.js';
-// import roomData from './scripts.js'
-// import roomData from './fetch.js'
+import roomData from '../test/sample-room-data.js';
+
 
 class Room {
   constructor (roomData) {
-    // this.number = roomData.number;
-    // this.roomType = roomData.roomType;
-    // this.bidet = roomData.bidet;
-    // this.bedSize = roomData.bedSize;
-    // this.numBeds = roomData.numBeds;
-    // this.costPerNight = roomData.costPerNight;
     this.roomData = roomData;
   }
   
