@@ -35,15 +35,9 @@ const managerViews = document.querySelector('.manager-view');
 let roomsAvailableTonight = document.querySelector('.available-tonight');
 let hotelRevenueTonight = document.querySelector('.hotel-revenue');
 let hotelOccupancyTonight = document.querySelector('.hotel-occupancy');
-// let managerLoginButton = document.querySelector('.manager-login');
+
 let guestBookingDisplay = document.querySelector('.guest-bookings-display');
-
-// const managerDashboard =  document.querySelector('.manager-dashboard');
-
-// const enterButton = document.querySelector('.enter');
-// enterButton = document.addEventListener('click', checkGuestLogin);
-// const managerLoginButton = document.querySelector('.manager-login')
-// managerLoginButton.addEventListener('click', checkManageLogin)
+let guestTotalSpent = document.querySelector('.guest-total-spent');
 
 let guestData;
 let roomsData;
@@ -169,7 +163,7 @@ function todaysAvailable(date) {
   let roomCount = 
   `
   <div class="today-available">
-  <h2>${emptyRooms}</h2>
+  <h3>${emptyRooms}</h3>
   </div>
   `
   roomsAvailableTonight.insertAdjacentHTML('beforeend', roomCount)
@@ -180,7 +174,7 @@ function todaysTotalRevenue(date) {
   let todaysTotal = 
   ` 
   <div class="todays-total">
-  <h2>${total}</h2>
+  <h3>${total}</h3>
   </div>
   `
   hotelRevenueTonight.insertAdjacentHTML('beforeend', todaysTotal);
@@ -188,11 +182,11 @@ function todaysTotalRevenue(date) {
 
 
 function todaysOccupancy(date) {
-  let todaysPercentage = todaysBookings.occupancyTotal("2020/01/24", roomsData);
+  let todaysPercentage = todaysBookings.occupancyTotal(date, roomsData);
   let todaysPercent = 
   `
   <div class="todays-occupancy">
-  <h2>${todaysPercentage}</h2>
+  <h3>${todaysPercentage}</h3>
   </div>
   `
   hotelOccupancyTonight.insertAdjacentHTML('beforeend', todaysPercent)
@@ -203,7 +197,18 @@ function loadGuestDashboard(id) {
   let allGuestBookings = guestInformation.findBookings(id, bookingsData)
   let sortedDates = arrangerByDate(allGuestBookings)
   let allDetails = getDetails(sortedDates)
-  allDetails.forEach(bookingInfo=> {
+  displayGuestBookings(allDetails)
+  displayguestTotal(id)
+}
+
+function arrangerByDate(guestReservations) {
+  return guestReservations.sort((a,b) => {
+    return new Date(b.date) - new Date(a.date)
+  })
+}
+
+function displayGuestBookings(data) {
+  data.forEach(bookingInfo=> {
     let guestBookings = 
     `
     <div class="current-guest-bookings">
@@ -219,13 +224,6 @@ function loadGuestDashboard(id) {
   });
 }
 
-function arrangerByDate(guestReservations) {
-  return guestReservations.sort((a,b) => {
-    return new Date(b.date) - new Date(a.date)
-  })
-}
-
-
 function getDetails(data) {
   return data.reduce((allDetails, reservation) => {
     roomsData.rooms.forEach(room => {
@@ -235,6 +233,17 @@ function getDetails(data) {
     })
     return allDetails
   }, [])
+}
+
+function displayguestTotal(id) {
+  let grandTotal = guestInformation.findTotalSpent(id, bookingsData,roomsData)
+  let total = 
+  `
+  <div class="guest-total">
+    <h3>${grandTotal}</h3>
+  </div>
+  `
+  guestTotalSpent.insertAdjacentHTML('beforeend', total)
 }
 
 
