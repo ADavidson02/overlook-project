@@ -35,6 +35,7 @@ const managerViews = document.querySelector('.manager-view');
 let roomsAvailableTonight = document.querySelector('.available-tonight');
 let hotelRevenueTonight = document.querySelector('.hotel-revenue');
 let hotelOccupancyTonight = document.querySelector('.hotel-occupancy');
+let managerLoginButton = document.querySelector('.manager-login');
 // const managerDashboard =  document.querySelector('.manager-dashboard');
 
 // const enterButton = document.querySelector('.enter');
@@ -66,36 +67,56 @@ function startApp()  {
 function windowOnClick(event) {
   if (event.target.classList.contains('manager-login')) {
     startApp() 
-    checkManageLogin(usernameCaptured, passwordCaptured);
-    let today = getTodaysDate() 
-    runManger(today);
-    todaysAvailable(today);
-    todaysTotalRevenue(today);
-    todaysOccupancy(today);
+    checkManagerUsername(usernameCaptured);
+    checkForPassword(passwordCaptured);
+    if(checkManagerUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
+      let today = getTodaysDate() 
+      runManger(today);
+      todaysAvailable(today);
+      todaysTotalRevenue(today);
+      todaysOccupancy(today);
+    }
   }
   if (event.target.classList.contains('guest-login')) {
     startApp() 
-    checkGuestLogin(usernameCaptured, passwordCaptured);
-    runGuest()
+    checkGuestUsername(usernameCaptured);
+    checkForPassword(passwordCaptured);
+    if(checkGuestUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
+      runGuest()  
+    }
   }
 }
-// 
-// startApp() {
-// 
-// }
 
-function checkManageLogin(inputName, managerPassword) {
+function checkManagerUsername(inputName) {
   usernameError.classList.add('hidden')
-  passwordError.classList.add('hidden')
-  let checkedUsername = inputName.value;
-  let loweredUsername = lowerCaseInput(checkedUsername)
-  let checkedPassword = managerPassword.value;
-  let loweredPassword = lowerCaseInput(checkedPassword);
-  if(loweredUsername !== 'manager' || loweredUsername === '' ) {
+  if (inputName.value.length === 0) {
     usernameError.classList.remove('hidden')
+    return 
+  } else if(inputName.value.length > 0 ) {
+    let checkedUsername = inputName.value;
+    let loweredUsername = lowerCaseInput(checkedUsername)
+    if (loweredUsername !== 'manager') {
+      usernameError.classList.remove('hidden')
+      return
+    } else if (loweredUsername === 'manager')
+    return 'good'
   }
-  if(loweredPassword !== 'overlook2020' || loweredPassword === '') {
-    passwordError.classList.remove('hidden')
+} 
+
+function checkForPassword(inputPassword) {
+  passwordError.classList.add('hidden');
+  if (inputPassword.value.length === 0) {
+    passwordError.classList.remove('hidden');
+    return
+  } else if ( inputPassword.value.length > 0) {
+    let checkedPassword = inputPassword.value;
+    let loweredPassword = lowerCaseInput(checkedPassword);
+    if (loweredPassword !== 'overlook2020') {
+      passwordError.classList.remove('hidden');
+      return
+    } else if (loweredPassword === 'overlook2020') {
+      return 'good'
+    } 
   }
 }
 
@@ -103,29 +124,30 @@ function lowerCaseInput(input) {
   return input.toLowerCase()
 }
 
-function runManger() {
+function runManger(date) {
   loginPage.classList.add('hidden');
   guestViews.classList.add('hidden');
   managerViews.classList.remove('hidden');
-  // managerDashboard.classList.remove('hidden');
 }
 
-function checkGuestLogin(inputName, guestPassword) {
-  usernameError.classList.add('hidden');
-  passwordError.classList.add('hidden');
-  let checkedUsername = inputName.value;
-  let loweredGuestUsername = lowerCaseInput(checkedUsername)
-  let checkedPassword = guestPassword.value;
-  let loweredPassword = lowerCaseInput(checkedPassword);
-  if(!loweredGuestUsername.includes('customer')) {
+function checkGuestUsername(inputName) {
+  usernameError.classList.add('hidden')
+  if (inputName.value.length === 0) {
     usernameError.classList.remove('hidden')
+    return 
+  } else if(inputName.value.length > 0 ) {
+    let checkedUsername = inputName.value
+    let loweredUsername = lowerCaseInput(checkedUsername)
+    if (!loweredUsername.includes('customer')) {
+      usernameError.classList.remove('hidden')
+      return
+    } else if (loweredUsername.includes('customer'))
+    return 'good'
   }
-  if(loweredPassword !== 'overlook2020') {
-    passwordError.classList.remove('hidden')
-  }
-}
+} 
 
 function runGuest() {
+  debugger
   loginPage.classList.add('hidden');
   guestViews.classList.remove('hidden');
   managerViews.classList.add('hidden');
@@ -140,6 +162,7 @@ function getTodaysDate() {
 }
 
 function todaysAvailable(date) {
+  console.log(todaysBookings)
   let emptyRooms = todaysBookings.availableRooms(date);
   let roomCount = 
   `

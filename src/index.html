@@ -18,10 +18,10 @@
   <wrapper class="center">
     <div class="login">
       <h2 class="username-heading">Username:</h2>
-        <input class="username-input" type="text" name="username" maxlength="10"/>
+        <input class="username-input" type="text" name="username" maxlength="10" required>
         <p class="username-error hidden">Username does not match</p>
       <h2 class="password-heading">Password:</h2>
-        <input class="password-input" type="password" name="password" maxlength="12"/>
+        <input class="password-input" type="password" name="password" maxlength="12" required>
         <p class="password-error hidden">Password does not match</p>
       <button class="guest-login">Log In</button>
       <button class="manager-login">Manager Log In</button> 
@@ -31,7 +31,7 @@
         <p class="today">Today's totals</p>
         <p class="available-tonight">Total Rooms available for today</p>
         <p class="hotel-revenue">Total revenue for today</p> 
-        <p class="hotel-occupancy">Percentage of rooms available for today</p>
+        <p class="hotel-occupancy">Percentage of rooms available for today</p> 
       </wrapper>
       <wrapper>
         <p class="manager hidden">User Name:</p>
