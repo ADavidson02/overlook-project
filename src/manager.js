@@ -6,7 +6,6 @@ let user = new User(userData);
 
 class Manager {
   constructor() {
-    
   }
   
   findGuest(name) {
@@ -35,6 +34,5 @@ class Manager {
     return foundTotal
   } 
 }
-
-
 export default Manager;
+

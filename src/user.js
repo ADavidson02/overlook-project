@@ -1,27 +1,31 @@
+import Booking from '../src/booking';
+import Room from '../src/room';
 import bookingsData from '../test/sample-bookings-data.js';
 import roomData from '../test/sample-room-data.js';
-import userData from '../test/sample-user-data.js';
+import guestData from '../test/sample-user-data.js';
 
 class User  {
-  constructor (userDetails){
-    this.id = userDetails.id;
-    this.name = userDetails.name;
+  constructor (guestData){
+    this.guestData = guestData;
   }
   
-  findBookings(id) {
-    let list = bookingsData.filter(booking => {
+  findBookings(id, data) {
+    let newBooking = new Booking(data)
+    let list = newBooking.booking.bookings.filter(booking => {
       return booking.userID === id
     })
     return list
   }
   
-  findTotalSpent(id) {
+  findTotalSpent(id, bookData, passedRoomData) {
+    let newRoom = new Room(passedRoomData)
     let total = 0;
-    let userBookings = this.findBookings(id)
+    let userBookings = this.findBookings(id, bookData)
     userBookings.forEach(booking => {
-      roomData.forEach(data => {
-        if(booking.roomNumber === data.number) {
-          total += data.costPerNight
+      newRoom.roomData.rooms.forEach(room => {
+        if(booking.roomNumber === room.number) {
+          console.log(room.costPerNight)
+          total += room.costPerNight
         }
       })
     })

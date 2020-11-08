@@ -1,46 +1,46 @@
 import bookingsData from '../test/sample-bookings-data.js';
 import roomData from '../test/sample-room-data.js'
+import Room from '../src/room';
+
 class Booking {
-  constructor(bookingDetails) {
-    this.id = bookingDetails.id;
-    this.userID = bookingDetails.userID;
-    this.date = bookingDetails.date;
-    this.roomNumber = bookingDetails.roomNumber;
-    this.roomServiceCharges = bookingDetails.roomServiceCharges
+  constructor(booking) {
+    this.booking = booking;
   }
   
   availableRooms(date) {
-    let available = bookingsData.filter(booking => {
-    return booking.date !== date
+    let occupiedRoom = this.booking.bookings.filter(book => {
+    return book.date === date 
     })
-    return available
+    return (25 - occupiedRoom.length)
   }
   
-  totalRevenue(date) {
+  totalRevenue(passedInDate, data) {
+    let room = new Room(data)
     let total = 0
-    let list = this.occupiedRooms(date);
-     list.forEach(room => {
-      roomData.forEach(data => {
-        if(room.roomNumber === data.number)
-        total += data.costPerNight
+    let list = this.occupiedRooms(passedInDate);
+     list.forEach(reservation => {
+      room.roomData.rooms.forEach(hotelRoom => {
+        if(hotelRoom.number === reservation.roomNumber)
+        total += hotelRoom.costPerNight
       });
     });
     return `$${total}`;
   }
 
-  occupiedRooms(date) {
-    return bookingsData.filter(booking => {
-    return booking.date === date
+  occupiedRooms(passedInDate) {
+    return this.booking.bookings.filter(booking => {
+    return booking.date === passedInDate
     })
   }
   
-  occupancyTotal(date) {
+  occupancyTotal(date, data) {
+    let room = new Room(data)
     let takenRooms = this.occupiedRooms(date)
-    let total = takenRooms.length / roomData.length 
+    let total = takenRooms.length / room.roomData.rooms.length
     let final = (total * 100)
     return `${final}%`
   }
   
 }
 
-export default Booking;
+  export default Booking; 
