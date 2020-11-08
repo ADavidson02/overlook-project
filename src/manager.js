@@ -8,9 +8,9 @@ class Manager {
   constructor() {
   }
   
-  findGuest(name) {
+  findGuest(name, passedUserData) {
    let searchName = name.replace(/\w\S*/g, function(name){return name.charAt(0).toUpperCase() + name.substr(1).toLowerCase();});
-    let foundUser = userData.find(user => {
+    let foundUser = passedUserData.find(user => {
     if(user.name === searchName) {
       return user
     }
@@ -22,15 +22,15 @@ class Manager {
    }
   }
 
-  findGuestBookings(name) {
-  let foundGuest = this.findGuest(name)
-  let foundBookings = user.findBookings(foundGuest.id)
+  findGuestBookings(name, passedUserData, passedBookData) {
+  let foundGuest = this.findGuest(name, passedUserData)
+  let foundBookings = user.findBookings(foundGuest.id, passedBookData)
   return foundBookings
   }
   
-  amountSpent(name) {
-    let foundGuest = this.findGuest(name)
-    let foundTotal = user.findTotalSpent(foundGuest.id)
+  amountSpent(searchName, passedUserData, passedRoomData, passedBookData) {
+    let foundGuest = this.findGuest(searchName, passedUserData)
+    let foundTotal = user.findTotalSpent(foundGuest.id, passedRoomData, passedBookData);
     return foundTotal
   } 
 }

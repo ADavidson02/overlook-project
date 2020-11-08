@@ -53,15 +53,15 @@ describe ('Booking', () => {
   })
   
   it('should have an amount of room that are available for today', () => {
-    expect(booking.availableRooms("2020/04/22")).to.equal(3);
+    expect(booking.availableRooms("2020/04/22", bookingsData)).to.equal(24);
   })
   
   it('should return the total revenue for a date', () => {
-    expect(booking.totalRevenue("2020/02/16")).to.equal('$231.46');
-    expect(booking.totalRevenue("2020/04/23")).to.equal('$0');
+    expect(booking.totalRevenue("2020/02/16", bookingsData, roomData)).to.equal('$231.46');
+    expect(booking.totalRevenue("2020/04/23", bookingsData, roomData)).to.equal('$0');
   })
   
   it('should return the percent of rooms booked for a date', () => {
-     expect(booking.occupancyTotal("2020/01/10")).to.equal('20%');
+     expect(booking.occupancyTotal("2020/01/10", bookingsData, roomData)).to.equal('20%');
   })
 })

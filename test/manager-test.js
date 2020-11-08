@@ -54,15 +54,15 @@ describe('Manager', () => {
   })
   
   it('should be able to search a guest by their name', () => {
-    expect(manager.findGuest("Rocio ScHuster")).to.deep.equal({ id: 2, name: 'Rocio Schuster' })
+    expect(manager.findGuest("Rocio ScHuster", userData)).to.deep.equal({ id: 2, name: 'Rocio Schuster' })
   })
   
   it('should have a message when no user is found', () => {
-    expect(manager.findGuest("Scooby Doo")).to.deep.equal("Sorry no user was found with the name Scooby Doo")
+    expect(manager.findGuest("Scooby Doo", userData)).to.deep.equal("Sorry no user was found with the name Scooby Doo")
   })
   
   it('should find all booking for searched user', () => {
-    expect(manager.findGuestBookings("Keon Kirlin")).to.deep.equal([
+    expect(manager.findGuestBookings("Keon Kirlin", userData, bookingsData)).to.deep.equal([
     {
       id: '5fwrgu4i7k55hl6t7',
       userID: 20,
@@ -74,7 +74,7 @@ describe('Manager', () => {
   })
   
   it('should return the amount a user has spent', () => {
-    expect(manager.amountSpent("Earline Hamill")).to.equal('$327.24')
+    expect(manager.amountSpent("Leatha Ullrich", userData, roomData, bookingsData)).to.equal('$327.24')
   })
   
 })
