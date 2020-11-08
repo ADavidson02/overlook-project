@@ -17,10 +17,11 @@ import Room from '../src/room';
 import Booking from '../src/booking';
 import Manager from '../src/manager';
 import requests from './fetch';
+import domUpdates from './dom-display';
 import './css/base.scss';
 import './css/manager-view.scss';
 import './css/guest-view.scss';
-
+// import { todaysAvailable, todaysTotalRevenue, todaysOccupancy} from './dom-display';
 window.addEventListener('click', windowOnClick);
 const recievedGuestData = requests.fetchGuestData();
 const recievedRoomData = requests.fetchRoomsData();
@@ -32,9 +33,9 @@ const usernameError = document.querySelector('.username-error');
 const passwordError = document.querySelector('.password-error');
 const guestViews = document.querySelector('.user-view')
 const managerViews = document.querySelector('.manager-view');
-let roomsAvailableTonight = document.querySelector('.available-tonight');
-let hotelRevenueTonight = document.querySelector('.hotel-revenue');
-let hotelOccupancyTonight = document.querySelector('.hotel-occupancy');
+// let roomsAvailableTonight = document.querySelector('.available-tonight');
+// let hotelRevenueTonight = document.querySelector('.hotel-revenue');
+// let hotelOccupancyTonight = document.querySelector('.hotel-occupancy');
 
 let guestBookingDisplay = document.querySelector('.guest-bookings-display');
 let guestTotalSpent = document.querySelector('.guest-total-spent');
@@ -43,6 +44,7 @@ let guestData;
 let roomsData;
 let bookingsData;
 
+
 Promise.all([recievedGuestData, recievedRoomData, recievedBookingsData])
   .then(value => {
     guestData = value[0];
@@ -50,9 +52,18 @@ Promise.all([recievedGuestData, recievedRoomData, recievedBookingsData])
     bookingsData = value[2];
   })
 
+  function hideItem(toHide) {
+    toHide.classList.add("hidden");
+  }
+  
+  function showItem(toShow) {
+  toShow.classList.remove("hidden");
+}
+
 let guestInformation
 let todaysRoomData 
 let todaysBookings 
+let dom
    
 function startApp()  {
   guestInformation = new User(guestData.users[1]);
@@ -68,9 +79,9 @@ function windowOnClick(event) {
     if(checkManagerUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
       let today = getTodaysDate() 
       runManger(today);
-      todaysAvailable(today);
-      todaysTotalRevenue(today);
-      todaysOccupancy(today);
+      domUpdates.todaysAvailable(today, todaysBookings);
+      domUpdates.todaysTotalRevenue(today);
+      domUpdates.todaysOccupancy(today);
     }
   }
   if (event.target.classList.contains('guest-login')) {
@@ -84,31 +95,32 @@ function windowOnClick(event) {
 }
 
 function checkManagerUsername(inputName) {
-  usernameError.classList.add('hidden')
+  hideItem(usernameError);
   if (inputName.value.length === 0) {
-    usernameError.classList.remove('hidden')
+    showItem(usernameError);
     return 
   } else if(inputName.value.length > 0 ) {
     let checkedUsername = inputName.value;
     let loweredUsername = lowerCaseInput(checkedUsername)
     if (loweredUsername !== 'manager') {
-      usernameError.classList.remove('hidden')
+      showItem(usernameError)
       return
     } else if (loweredUsername === 'manager')
+    hideItem(usernameError)
     return 'good'
   }
 } 
 
 function checkForPassword(inputPassword) {
-  passwordError.classList.add('hidden');
+  hideItem(passwordError)
   if (inputPassword.value.length === 0) {
-    passwordError.classList.remove('hidden');
+    showItem(passwordError);
     return
   } else if ( inputPassword.value.length > 0) {
     let checkedPassword = inputPassword.value;
     let loweredPassword = lowerCaseInput(checkedPassword);
     if (loweredPassword !== 'overlook2020') {
-      passwordError.classList.remove('hidden');
+      showItem(passwordError)
       return
     } else if (loweredPassword === 'overlook2020') {
       return 'good'
@@ -121,21 +133,21 @@ function lowerCaseInput(input) {
 }
 
 function runManger(date) {
-  loginPage.classList.add('hidden');
-  guestViews.classList.add('hidden');
-  managerViews.classList.remove('hidden');
+  hideItem(loginPage)
+  hideItem(guestViews)
+  showItem(managerViews);
 }
 
 function checkGuestUsername(inputName) {
-  usernameError.classList.add('hidden')
+  hideItem(usernameError)
   if (inputName.value.length === 0) {
-    usernameError.classList.remove('hidden')
+    showItem(usernameError);
     return 
   } else if(inputName.value.length > 0 ) {
     let checkedUsername = inputName.value
     let loweredUsername = lowerCaseInput(checkedUsername)
     if (!loweredUsername.includes('customer')) {
-      usernameError.classList.remove('hidden')
+      showItem(usernameError)
       return
     } else if (loweredUsername.includes('customer'))
     return 'good'
@@ -143,9 +155,9 @@ function checkGuestUsername(inputName) {
 } 
 
 function runGuest() {
-  loginPage.classList.add('hidden');
-  guestViews.classList.remove('hidden');
-  managerViews.classList.add('hidden');
+  hideItem(loginPage)
+  hideItem(managerViews)
+  showItem(guestViews)
   let userNumber = usernameCaptured.value.slice(8,10)
   loadGuestDashboard(+userNumber)
 }
@@ -158,39 +170,39 @@ function getTodaysDate() {
   return today = yyyy + '/' + mm + '/' + dd;
 }
 
-function todaysAvailable(date) {
-  let emptyRooms = todaysBookings.availableRooms(date);
-  let roomCount = 
-  `
-  <div class="today-available">
-  <h3>${emptyRooms}</h3>
-  </div>
-  `
-  roomsAvailableTonight.insertAdjacentHTML('beforeend', roomCount)
-}
-
-function todaysTotalRevenue(date) {
-  let total = todaysBookings.totalRevenue(date, roomsData);
-  let todaysTotal = 
-  ` 
-  <div class="todays-total">
-  <h3>${total}</h3>
-  </div>
-  `
-  hotelRevenueTonight.insertAdjacentHTML('beforeend', todaysTotal);
-}
-
-
-function todaysOccupancy(date) {
-  let todaysPercentage = todaysBookings.occupancyTotal(date, roomsData);
-  let todaysPercent = 
-  `
-  <div class="todays-occupancy">
-  <h3>${todaysPercentage}</h3>
-  </div>
-  `
-  hotelOccupancyTonight.insertAdjacentHTML('beforeend', todaysPercent)
-}
+// function todaysAvailable(date) {
+//   let emptyRooms = todaysBookings.availableRooms(date);
+//   let roomCount = 
+//   `
+//   <div class="today-available">
+//   <h3>${emptyRooms}</h3>
+//   </div>
+//   `
+//   roomsAvailableTonight.insertAdjacentHTML('beforeend', roomCount)
+// }
+// 
+// function todaysTotalRevenue(date) {
+//   let total = todaysBookings.totalRevenue(date, roomsData);
+//   let todaysTotal = 
+//   ` 
+//   <div class="todays-total">
+//   <h3>${total}</h3>
+//   </div>
+//   `
+//   hotelRevenueTonight.insertAdjacentHTML('beforeend', todaysTotal);
+// }
+// 
+// 
+// function todaysOccupancy(date) {
+//   let todaysPercentage = todaysBookings.occupancyTotal(date, roomsData);
+//   let todaysPercent = 
+//   `
+//   <div class="todays-occupancy">
+//   <h3>${todaysPercentage}</h3>
+//   </div>
+//   `
+//   hotelOccupancyTonight.insertAdjacentHTML('beforeend', todaysPercent)
+// }
 
 
 function loadGuestDashboard(id) {
@@ -245,5 +257,6 @@ function displayguestTotal(id) {
   `
   guestTotalSpent.insertAdjacentHTML('beforeend', total)
 }
+
 
 

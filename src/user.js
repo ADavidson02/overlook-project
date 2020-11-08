@@ -11,8 +11,6 @@ class User  {
   
   findBookings(id, data) {
     let newBooking = new Booking(data)
-    console.log('id', id)
-    // console.log(newBooking.booking.bookings)
     let list = newBooking.booking.bookings.filter(booking => {
       return booking.userID === id
     })
@@ -23,8 +21,6 @@ class User  {
     let newRoom = new Room(passedRoomData)
     let total = 0;
     let userBookings = this.findBookings(id, bookData)
-    console.log(userBookings)//all their bookings
-    console.log(newRoom.roomData.rooms)
     userBookings.forEach(booking => {
       newRoom.roomData.rooms.forEach(room => {
         if(booking.roomNumber === room.number) {
