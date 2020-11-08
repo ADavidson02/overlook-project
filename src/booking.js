@@ -7,19 +7,18 @@ class Booking {
     this.booking = booking;
   }
   
-  availableRooms(date) {
-    let occupiedRoom = this.booking.bookings.filter(book => {
+  availableRooms(date, passedBookData) {
+    let occupiedRoom = passedBookData.bookings.filter(book => {
     return book.date === date 
     })
     return (25 - occupiedRoom.length)
   }
   
-  totalRevenue(passedInDate, data) {
-    let room = new Room(data)
+  totalRevenue(date, passedBookData) {
     let total = 0
-    let list = this.occupiedRooms(passedInDate);
+    let list = this.occupiedRooms(date, passedBookData);
      list.forEach(reservation => {
-      room.roomData.rooms.forEach(hotelRoom => {
+      passedRoomData.forEach(hotelRoom => {
         if(hotelRoom.number === reservation.roomNumber)
         total += hotelRoom.costPerNight
       });
@@ -27,19 +26,19 @@ class Booking {
     return `$${total}`;
   }
 
-  occupiedRooms(passedInDate) {
-    return this.booking.bookings.filter(booking => {
-    return booking.date === passedInDate
+  occupiedRooms(date, passedBookData) {
+    return passedBookData.bookings.filter(booking => {
+    return booking.date === date
     })
   }
   
-  occupancyTotal(date, data) {
-    let room = new Room(data)
-    let takenRooms = this.occupiedRooms(date)
-    let total = takenRooms.length / room.roomData.rooms.length
+  occupancyTotal(date, passedRoomData, passedBookData) {
+    let takenRooms = this.occupiedRooms(date, passedBookData)
+    let total = takenRooms.length / passedRoomData.rooms.length
     let final = (total * 100)
     return `${final}%`
   }
+  
   
 }
 

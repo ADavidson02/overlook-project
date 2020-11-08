@@ -9,27 +9,28 @@ class User  {
     this.guestData = guestData;
   }
   
-  findBookings(id, data) {
-    let newBooking = new Booking(data)
-    let list = newBooking.booking.bookings.filter(booking => {
-      return booking.userID === id
-    })
-    return list
+  findBookings(passedId, passedBookData) {
+    let thisBookings = passedBookData.bookings.reduce((allUserBooking, booking) => {
+      if (booking.userID === passedId) {
+        allUserBooking.push(booking)
+      }
+      return allUserBooking
+    }, [])
+    return thisBookings
   }
   
-  findTotalSpent(id, bookData, passedRoomData) {
-    let newRoom = new Room(passedRoomData)
-    let total = 0;
-    let userBookings = this.findBookings(id, bookData)
-    userBookings.forEach(booking => {
-      newRoom.roomData.rooms.forEach(room => {
+  findTotalSpent(passedId, passedRoomData, passedBookData) {
+    let userBookings = this.findBookings(passedId, passedBookData);
+    let grandTotal = userBookings.reduce((total, booking) => {
+       passedRoomData.rooms.forEach(room => {
         if(booking.roomNumber === room.number) {
-          console.log(room.costPerNight)
           total += room.costPerNight
         }
       })
-    })
-    return `$${total}`;
+      
+      return (Math.round(total * 1000) / 1000)
+    }, 0)
+    return `$${grandTotal}`
   }
 }
 

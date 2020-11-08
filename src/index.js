@@ -23,9 +23,9 @@ import './css/manager-view.scss';
 import './css/guest-view.scss';
 // import { todaysAvailable, todaysTotalRevenue, todaysOccupancy} from './dom-display';
 window.addEventListener('click', windowOnClick);
-const recievedGuestData = requests.fetchGuestData();
-const recievedRoomData = requests.fetchRoomsData();
-const recievedBookingsData = requests.fetchBookingsData();
+// const recievedGuestData = requests.fetchGuestData();
+// const recievedRoomData = requests.fetchRoomsData();
+// const recievedBookingsData = requests.fetchBookingsData();
 const loginPage = document.querySelector('.login');
 let usernameCaptured = document.querySelector('.username-input');
 const passwordCaptured = document.querySelector('.password-input');
@@ -37,60 +37,61 @@ const managerViews = document.querySelector('.manager-view');
 // let hotelRevenueTonight = document.querySelector('.hotel-revenue');
 // let hotelOccupancyTonight = document.querySelector('.hotel-occupancy');
 
-let guestBookingDisplay = document.querySelector('.guest-bookings-display');
-let guestTotalSpent = document.querySelector('.guest-total-spent');
+// let guestBookingDisplay = document.querySelector('.guest-bookings-display');
+// let guestTotalSpent = document.querySelector('.guest-total-spent');
 
 let guestData;
 let roomsData;
 let bookingsData;
 
-
-Promise.all([recievedGuestData, recievedRoomData, recievedBookingsData])
-  .then(value => {
-    guestData = value[0];
-    roomsData = value[1];
-    bookingsData = value[2];
-  })
-
-  function hideItem(toHide) {
-    toHide.classList.add("hidden");
-  }
+function hideItem(toHide) {
+  toHide.classList.add("hidden");
+}
   
   function showItem(toShow) {
   toShow.classList.remove("hidden");
 }
 
-let guestInformation
-let todaysRoomData 
-let todaysBookings 
+// let guestInformation
+// let todaysRoomData 
+// let todaysBookings 
 let dom
-   
-function startApp()  {
-  guestInformation = new User(guestData.users[1]);
-  todaysBookings = new Booking(bookingsData);
-  todaysRoomData = new Room(roomsData);
+let user
+window.onload = getData;
+
+function getData()  {
+  const recievedGuestData = requests.fetchGuestData();
+  const recievedRoomData = requests.fetchRoomsData();
+  const recievedBookingsData = requests.fetchBookingsData();
+  Promise.all([recievedGuestData, recievedRoomData, recievedBookingsData])
+    .then(value => {
+      guestData = value[0];
+      roomsData = value[1];
+      bookingsData = value[2];
+    })
 }
 
 function windowOnClick(event) {
   if (event.target.classList.contains('manager-login')) {
-    startApp() 
-    checkManagerUsername(usernameCaptured);
-    checkForPassword(passwordCaptured);
-    if(checkManagerUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
+    // startApp() 
+
+    // checkManagerUsername(usernameCaptured);
+    // checkForPassword(passwordCaptured);
+    // if(checkManagerUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
       let today = getTodaysDate() 
       runManger(today);
-      domUpdates.todaysAvailable(today, todaysBookings);
-      domUpdates.todaysTotalRevenue(today);
-      domUpdates.todaysOccupancy(today);
-    }
+      domUpdates.todaysAvailable(today, bookingsData);
+      domUpdates.todaysTotalRevenue(today, roomsData, bookingsData);
+      domUpdates.todaysOccupancy(today, roomsData, bookingsData);
+    // }
   }
   if (event.target.classList.contains('guest-login')) {
-    startApp() 
-    checkGuestUsername(usernameCaptured);
-    checkForPassword(passwordCaptured);
-    if(checkGuestUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
+    // startApp() 
+    // checkGuestUsername(usernameCaptured);
+    // checkForPassword(passwordCaptured);
+    // if(checkGuestUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
       runGuest()  
-    }
+    // }
   }
 }
 
@@ -159,6 +160,7 @@ function runGuest() {
   hideItem(managerViews)
   showItem(guestViews)
   let userNumber = usernameCaptured.value.slice(8,10)
+  user = new User(+userNumber)
   loadGuestDashboard(+userNumber)
 }
 
@@ -206,11 +208,11 @@ function getTodaysDate() {
 
 
 function loadGuestDashboard(id) {
-  let allGuestBookings = guestInformation.findBookings(id, bookingsData)
+  let allGuestBookings = user.findBookings(id, bookingsData);
   let sortedDates = arrangerByDate(allGuestBookings)
   let allDetails = getDetails(sortedDates)
-  displayGuestBookings(allDetails)
-  displayguestTotal(id)
+  domUpdates.displayGuestBookings(allDetails)
+  domUpdates.displayguestTotal(id, roomsData, bookingsData)
 }
 
 function arrangerByDate(guestReservations) {
@@ -219,22 +221,22 @@ function arrangerByDate(guestReservations) {
   })
 }
 
-function displayGuestBookings(data) {
-  data.forEach(bookingInfo=> {
-    let guestBookings = 
-    `
-    <div class="current-guest-bookings">
-      <h3>Date: ${bookingInfo.date}</h3>
-      <p>Room type: ${bookingInfo.roomInfo.roomType}</p>
-      <p>Bidet: ${bookingInfo.roomInfo.bidet}</p>
-      <p>Bedsize: ${bookingInfo.roomInfo.bedSize}</p>
-      <p>number of beds: ${bookingInfo.roomInfo.numBeds}</p>
-      <p>cost per night: ${bookingInfo.roomInfo.costPerNight}</p>
-    </div>
-    `
-    guestBookingDisplay.insertAdjacentHTML('beforeend', guestBookings)
-  });
-}
+// function displayGuestBookings(data) {
+//   data.forEach(bookingInfo=> {
+//     let guestBookings = 
+//     `
+//     <div class="current-guest-bookings">
+//       <h3>Date: ${bookingInfo.date}</h3>
+//       <p>Room type: ${bookingInfo.roomInfo.roomType}</p>
+//       <p>Bidet: ${bookingInfo.roomInfo.bidet}</p>
+//       <p>Bedsize: ${bookingInfo.roomInfo.bedSize}</p>
+//       <p>number of beds: ${bookingInfo.roomInfo.numBeds}</p>
+//       <p>cost per night: ${bookingInfo.roomInfo.costPerNight}</p>
+//     </div>
+//     `
+//     guestBookingDisplay.insertAdjacentHTML('beforeend', guestBookings)
+//   });
+// }
 
 function getDetails(data) {
   return data.reduce((allDetails, reservation) => {
@@ -247,16 +249,16 @@ function getDetails(data) {
   }, [])
 }
 
-function displayguestTotal(id) {
-  let grandTotal = guestInformation.findTotalSpent(id, bookingsData,roomsData)
-  let total = 
-  `
-  <div class="guest-total">
-    <h3>${grandTotal}</h3>
-  </div>
-  `
-  guestTotalSpent.insertAdjacentHTML('beforeend', total)
-}
+// function displayguestTotal(id) {
+//   let grandTotal = guestInformation.findTotalSpent(id, bookingsData,roomsData)
+//   let total = 
+//   `
+//   <div class="guest-total">
+//     <h3>${grandTotal}</h3>
+//   </div>
+//   `
+//   guestTotalSpent.insertAdjacentHTML('beforeend', total)
+// }
 
 
 
