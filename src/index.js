@@ -22,7 +22,7 @@ import domUpdates from './dom-display';
 import './css/base.scss';
 import './css/manager-view.scss';
 import './css/guest-view.scss';
-// import { todaysAvailable, todaysTotalRevenue, todaysOccupancy} from './dom-display';
+
 window.addEventListener('click', windowOnClick);
 // const recievedGuestData = requests.fetchGuestData();
 // const recievedRoomData = requests.fetchRoomsData();
@@ -43,6 +43,7 @@ let searchGuestViewButton = document.querySelector('.search-guest-view');
 let searchNameButton = document.querySelector('.search-name');
 let searchNameInput = document.querySelector('.search-name-input');
 let searchGuestTitle = document.querySelector('.search-guest');
+let searchedGuestTitle = document.querySelector('.user-search-results');
 
 
 // let roomsAvailableTonight = document.querySelector('.available-tonight');
@@ -64,9 +65,7 @@ function showItem(toShow) {
   toShow.classList.remove("hidden");
 }
 
-// let guestInformation
-// let todaysRoomData 
-// let todaysBookings 
+
 let dom
 let user
 let manager
@@ -108,6 +107,7 @@ function windowOnClick(event) {
   }
   if (event.target.classList.contains('search-guest-view')) {
     hideItem(managerDashboard);
+    hideItem(searchedGuestTitle)
     showItem(searchGuestViewButton);
     showItem(searchNameInput);
     showItem(homeButtonManger);
@@ -115,14 +115,25 @@ function windowOnClick(event) {
     showItem(searchGuestTitle);
     showItem(searchNameButton)
     
+    
   }
   if (event.target.classList.contains('search-name')) {
     hideItem(searchGuestTitle);
     hideItem(searchNameInput);
     hideItem(searchNameButton);
+    showItem(searchedGuestTitle)
     searchGuestDatabase(searchNameInput.value, guestData, roomsData, bookingsData)
   }
+  if (event.target.classList.contains('home-button-manager')) {
+    hideItem(searchNameButton)
+    hideItem(searchGuestTitle)
+    hideItem(homeButtonManger)
+    hideItem(searchNameInput)
+    hideItem(searchedGuestTitle)
+    showItem(managerDashboard)
+    showItem(searchGuestViewButton)
     
+  }
 }
 
 function checkManagerUsername(inputName) {
@@ -208,41 +219,6 @@ function getTodaysDate() {
   return today = yyyy + '/' + mm + '/' + dd;
 }
 
-// function todaysAvailable(date) {
-//   let emptyRooms = todaysBookings.availableRooms(date);
-//   let roomCount = 
-//   `
-//   <div class="today-available">
-//   <h3>${emptyRooms}</h3>
-//   </div>
-//   `
-//   roomsAvailableTonight.insertAdjacentHTML('beforeend', roomCount)
-// }
-// 
-// function todaysTotalRevenue(date) {
-//   let total = todaysBookings.totalRevenue(date, roomsData);
-//   let todaysTotal = 
-//   ` 
-//   <div class="todays-total">
-//   <h3>${total}</h3>
-//   </div>
-//   `
-//   hotelRevenueTonight.insertAdjacentHTML('beforeend', todaysTotal);
-// }
-// 
-// 
-// function todaysOccupancy(date) {
-//   let todaysPercentage = todaysBookings.occupancyTotal(date, roomsData);
-//   let todaysPercent = 
-//   `
-//   <div class="todays-occupancy">
-//   <h3>${todaysPercentage}</h3>
-//   </div>
-//   `
-//   hotelOccupancyTonight.insertAdjacentHTML('beforeend', todaysPercent)
-// }
-
-
 function loadGuestDashboard(id) {
   let allGuestBookings = user.findBookings(id, bookingsData.bookings);
   let sortedDates = arrangerByDate(allGuestBookings)
@@ -257,23 +233,6 @@ function arrangerByDate(guestReservations) {
   })
 }
 
-// function displayGuestBookings(data) {
-//   data.forEach(bookingInfo=> {
-//     let guestBookings = 
-//     `
-//     <div class="current-guest-bookings">
-//       <h3>Date: ${bookingInfo.date}</h3>
-//       <p>Room type: ${bookingInfo.roomInfo.roomType}</p>
-//       <p>Bidet: ${bookingInfo.roomInfo.bidet}</p>
-//       <p>Bedsize: ${bookingInfo.roomInfo.bedSize}</p>
-//       <p>number of beds: ${bookingInfo.roomInfo.numBeds}</p>
-//       <p>cost per night: ${bookingInfo.roomInfo.costPerNight}</p>
-//     </div>
-//     `
-//     guestBookingDisplay.insertAdjacentHTML('beforeend', guestBookings)
-//   });
-// }
-
 function getDetails(data) {
   return data.reduce((allDetails, reservation) => {
     roomsData.rooms.forEach(room => {
@@ -287,20 +246,8 @@ function getDetails(data) {
 
 function searchGuestDatabase(name, passedUserData, passedRoomData, passedBookData) {
   let searchedGuest = manager.findGuest(searchNameInput.value, guestData.users)
-  console.log('index', searchedGuest.name)
-  domUpdates.displayGuest(searchedGuest, guestData, roomsData.rooms, bookingsData.bookings)
+  domUpdates.displaySearchedGuestBookings(searchedGuest, guestData, bookingsData.bookings)
+  domUpdates.displaySearchedGuestName(searchedGuest)
+  domUpdates.displaySearchedGuestTotal(searchNameInput.value, guestData.users, roomsData.rooms, bookingsData.bookings)
 }
-
-// function displayguestTotal(id) {
-//   let grandTotal = guestInformation.findTotalSpent(id, bookingsData,roomsData)
-//   let total = 
-//   `
-//   <div class="guest-total">
-//     <h3>${grandTotal}</h3>
-//   </div>
-//   `
-//   guestTotalSpent.insertAdjacentHTML('beforeend', total)
-// }
-
-
 

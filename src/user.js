@@ -10,8 +10,6 @@ class User  {
   }
   
   findBookings(passedId, passedBookData) {
-    console.log('user-id', passedId)
-    console.log('user-book', passedBookData)
     let thisBookings = passedBookData.reduce((allUserBooking, booking) => {
       if (booking.userID === passedId) {
         allUserBooking.push(booking)

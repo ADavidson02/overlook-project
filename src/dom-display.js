@@ -30,7 +30,7 @@ const domUpdates = {
     roomsAvailableTonight.insertAdjacentHTML('beforeend', roomCount)
   },
 
-  todaysTotalRevenue(date, passedBookingData, passedRoomData) {
+  todaysTotalRevenue(date, passedRoomData, passedBookData) {
     let total = booking.totalRevenue(date, passedRoomData);
     let todaysTotal = 
     ` 
@@ -80,18 +80,42 @@ const domUpdates = {
     guestTotalSpent.insertAdjacentHTML('beforeend', total)
   },
   
-  displayGuest(name, passedUserData, passedRoomData, passedBookData) {
+  
+  displaySearchedGuestName(name) {
+  
+    let displayName = 
+      `
+      <div class="searched-name">
+        <h3>Guest: ${name.name}</h3>
+      </div>
+      `
+      searchedGuestResult.insertAdjacentHTML('afterbegin', displayName)
+  }, 
+
+  displaySearchedGuestBookings(name, passedUserData, passedBookData) {
+  
     // let searchedGuest = manager.findGuest(name, passedUserData)
-    let searchedGuestBookings = manager.findGuestBookings(name.id, passedUserData, passedRoomData, passedBookData)
-    
-    let displaySearchedGuest = 
+    let searchedGuestBookings = manager.findGuestBookings(name.id, passedUserData, passedBookData)
+    searchedGuestBookings.forEach( booking => {
+      let displaySearchedGuest = 
+      `
+      <div class="found-guest-result">
+        <p>${booking.date}</p>
+      </div>
+      `
+      searchedGuestResult.insertAdjacentHTML('beforeend', displaySearchedGuest)
+    })
+  },
+  
+  displaySearchedGuestTotal(searchName, passedUserData, passedRoomData, passedBookData) {
+    let currentTotal = manager.amountSpent(searchName, passedUserData, passedRoomData, passedBookData)
+    let displayTotal =
     `
-    <div class="found-guest-result">
-      <h3>${name}</h3>
-      <h3>${searchedGuestBookings}</h3>
-    </div>
+    <div class="found-guest-total">
+      <h3>Total amount spent ${ currentTotal}</h3>
+    </div>  
     `
-    searchedGuestResult.insertAdjacentHTML('beforeend', displaySearchedGuest)
+    searchedGuestResult.insertAdjacentHTML('afterend', displayTotal)
   }
   
 }

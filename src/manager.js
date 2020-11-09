@@ -24,7 +24,9 @@ class Manager {
 
   findGuestBookings(name, passedUserData, passedBookData) {
   // let foundGuest = this.findGuest(name, passedUserData)
+
   let foundBookings = user.findBookings(name, passedBookData)
+  console.log('man', name)
   return foundBookings
   }
   
