@@ -9,9 +9,11 @@
     <header>
       <h1 class="title">Overlook Hotel</h1>
       <nav>
-        <ul class="navigation hidden">
-          <button class="home-button">Home</button>
-          <button class="new-reservation-button" >New Reservation</button>
+        <ul class="navigation">
+          <button class="home-button-guest hidden">Home</button>
+          <button class="home-button-manager hidden">Home</button>
+          <button class="new-reservation-button hidden" >New Reservation</button>
+          <button class="search-guest-view hidden">Search Guest</button>
         </ul>
       </nav>
     </header>
@@ -27,23 +29,28 @@
       <button class="manager-login">Manager Log In</button> 
     </div>
     <div class="manager-view hidden">
-      <wrapper "manager-dashboard">
-        <p class="today">Today's totals</p>
+      <wrapper class="manager-dashboard hidden">
+        <h2 class="today">Today's totals</h2>
         <p class="available-tonight">Total Rooms available for today</p>
         <p class="hotel-revenue">Total revenue for today</p> 
         <p class="hotel-occupancy">Percentage of rooms available for today</p> 
       </wrapper>
-      <wrapper>
-        <p class="manager hidden">User Name:</p>
+      <wrapper calss="manager-search">
+        <p class="search-guest hidden">Search Guest Database:</p>
+        <input class="search-name-input hidden">
+        <button class="search-name">Search</button>
       </wrapper>
+      <wrapper class="user-search-results hidden">
+        <p> All Bookings:</p>
+      </wrapper>
+      <wrapper>
     </div>
     <div class="user-view hidden">
       <wrapper class="user-dashboard">
         <p class="guest-bookings-display">My Bookings:</p>
         <h3 class="guest-total-spent">Total spent</h3>
       </wrapper>
-      <wrapper class="user-search-results">
-      </wrapper>
+    </wrapper>
     </div>
     <!-- <footer>
       <img class="turing" src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">

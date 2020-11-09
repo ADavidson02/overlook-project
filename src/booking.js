@@ -1,5 +1,4 @@
-import bookingsData from '../test/sample-bookings-data.js';
-import roomData from '../test/sample-room-data.js'
+ 
 import Room from '../src/room';
 
 class Booking {
@@ -8,13 +7,13 @@ class Booking {
   }
   
   availableRooms(date, passedBookData) {
-    let occupiedRoom = passedBookData.bookings.filter(book => {
+    let occupiedRoom = passedBookData.filter(book => {
     return book.date === date 
     })
     return (25 - occupiedRoom.length)
   }
   
-  totalRevenue(date, passedBookData) {
+  totalRevenue(date, passedBookData, passedRoomData) {
     let total = 0
     let list = this.occupiedRooms(date, passedBookData);
      list.forEach(reservation => {
@@ -27,19 +26,18 @@ class Booking {
   }
 
   occupiedRooms(date, passedBookData) {
-    return passedBookData.bookings.filter(booking => {
+    return passedBookData.filter(booking => {
     return booking.date === date
     })
   }
   
   occupancyTotal(date, passedRoomData, passedBookData) {
     let takenRooms = this.occupiedRooms(date, passedBookData)
-    let total = takenRooms.length / passedRoomData.rooms.length
+    let total = takenRooms.length / passedRoomData.length
     let final = (total * 100)
     return `${final}%`
   }
-  
-  
+
 }
 
   export default Booking; 

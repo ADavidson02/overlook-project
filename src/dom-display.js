@@ -7,16 +7,20 @@ import Booking from '../src/booking';
 import Manager from '../src/manager'
 let booking = new Booking(bookingsData)
 let user = new User(userData)
+let manager = new Manager()
 
 let roomsAvailableTonight = document.querySelector('.available-tonight');
 let hotelRevenueTonight = document.querySelector('.hotel-revenue');
 let hotelOccupancyTonight = document.querySelector('.hotel-occupancy');
 let guestBookingDisplay = document.querySelector('.guest-bookings-display');
 let guestTotalSpent = document.querySelector('.guest-total-spent');
+let searchedGuestResult = document.querySelector('.user-search-results')
+
 
 const domUpdates = { 
   todaysAvailable(date, passedBookingData) {
-    let emptyRooms = booking.availableRooms(date, passedBookingData);
+    let emptyRooms = booking.availableRooms(date, passedBookingData.bookings);
+  
     let roomCount = 
     `
     <div class="today-available">
@@ -27,7 +31,7 @@ const domUpdates = {
     roomsAvailableTonight.insertAdjacentHTML('beforeend', roomCount)
   },
 
-  todaysTotalRevenue(date, passedBookingData, passedRoomData) {
+  todaysTotalRevenue(date, passedRoomData, passedBookData) {
     let total = booking.totalRevenue(date, passedRoomData);
     let todaysTotal = 
     ` 
@@ -39,7 +43,7 @@ const domUpdates = {
   },
 
   todaysOccupancy(date, passedRoomData, passedBookData) {
-    let todaysPercentage = booking.occupancyTotal(date, passedRoomData, passedBookData);
+    let todaysPercentage = booking.occupancyTotal(date, passedRoomData.rooms, passedBookData.bookings);
     let todaysPercent = 
     `
     <div class="todays-occupancy">
@@ -67,7 +71,7 @@ const domUpdates = {
   },
   
   displayguestTotal(id, passedRoomData, passedBookData) {
-    let grandTotal = user.findTotalSpent(id, passedRoomData, passedBookData)
+    let grandTotal = user.findTotalSpent(id, passedRoomData.rooms, passedBookData.bookings)
     let total = 
     `
     <div class="guest-total">
@@ -75,7 +79,56 @@ const domUpdates = {
     </div>
     `
     guestTotalSpent.insertAdjacentHTML('beforeend', total)
+  },
+  
+  
+  displaySearchedGuestName(name) {
+    let displayName = 
+      `
+      <div class="searched-name">
+        <h3>Guest: ${name}</h3>
+      </div>
+      `
+      searchedGuestResult.insertAdjacentHTML('afterbegin', displayName)
+  }, 
+
+  displaySearchedGuestBookings(name, passedUserData, passedBookData) {
+  
+    // let searchedGuest = manager.findGuest(name, passedUserData)
+    let searchedGuestBookings = manager.findGuestBookings(name.id, passedUserData, passedBookData)
+    if (searchedGuestBookings.length === 0 ) {
+      let displaySearchedGuest = 
+      `
+      <div class="found-guest-result">
+        <p>Sorry there were no bookings found for the searched name</p>
+      </div>
+      `
+      searchedGuestResult.insertAdjacentHTML('beforeend', displaySearchedGuest)
+    } 
+    searchedGuestBookings.forEach( booking => {
+      let displaySearchedGuest = 
+      `
+      <div class="found-guest-result">
+        <p>${booking.date}</p>
+      </div>
+      `
+      searchedGuestResult.insertAdjacentHTML('beforeend', displaySearchedGuest)
+    })
+  },
+  
+  displaySearchedGuestTotal(searchName, passedUserData, passedRoomData, passedBookData) {
+    let currentTotal = manager.amountSpent(searchName, passedUserData, passedRoomData, passedBookData)
+    let displayTotal =
+    `
+    <div class="found-guest-total">
+      <h3>Total amount spent ${ currentTotal}</h3>
+    </div>  
+    `
+    searchedGuestResult.insertAdjacentHTML('afterend', displayTotal)
   }
+  
 }
+
+
 
 export default domUpdates;

@@ -10,7 +10,7 @@ class User  {
   }
   
   findBookings(passedId, passedBookData) {
-    let thisBookings = passedBookData.bookings.reduce((allUserBooking, booking) => {
+    let thisBookings = passedBookData.reduce((allUserBooking, booking) => {
       if (booking.userID === passedId) {
         allUserBooking.push(booking)
       }
@@ -22,12 +22,11 @@ class User  {
   findTotalSpent(passedId, passedRoomData, passedBookData) {
     let userBookings = this.findBookings(passedId, passedBookData);
     let grandTotal = userBookings.reduce((total, booking) => {
-       passedRoomData.rooms.forEach(room => {
+       passedRoomData.forEach(room => {
         if(booking.roomNumber === room.number) {
           total += room.costPerNight
         }
       })
-      
       return (Math.round(total * 1000) / 1000)
     }, 0)
     return `$${grandTotal}`

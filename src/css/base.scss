@@ -2,7 +2,9 @@
 $primary-background: #A7D2CB;
 $text-color: #414141;
 $body-font-family: 'Open Sans';
-
+@import 'buttons';
+@import 'manager-view';
+@import'guest-view';
 
 nav {
   display: flex;
@@ -10,10 +12,11 @@ nav {
   width: 100%;
   left: 0px; 
   right: 0px;
+  height: 3.3em;
 }
 
 body {
-  background: #A7D2CB;
+  background: $primary-background;
   background-image: url("https://image.freepik.com/free-vector/vector-floral-3d-seamless-pattern-background-christmas-invitation-cards-decoration_1284-41314.jpg");
   background-position: repeat;
   font-family: $body-font-family;
@@ -23,7 +26,7 @@ body {
 
 .title {
   padding: 12em, 0, 0, 0;
-  color: #414141;
+  color: $text-color;
   display: flex;
   justify-content: center;
   size: 20em;
@@ -45,13 +48,18 @@ nav li {
   margin-bottom: 10em;
 }
 
+.today {
+  color: $text-color;
+  size: 23em;
+}
+
 .center {
-  background-color:  #A7D2CB;
+  background-color: $primary-background;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80%;
+  // height: 80%;
   width: 80%;
   margin: 2em 0 0 1em;
   -webkit-box-shadow: 0 10px 6px -6px #777;
@@ -59,33 +67,13 @@ nav li {
   box-shadow: 0 10px 6px -6px #777;
 }
 
+
+.login{
+  @extend .center;
+}
+
 .hidden {
   display: none;
-}
-
-
-
-.login {
-  margin: 8em;
-  color: $text-color;
-}
-
-
-.login {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  size: 20em;
-}
-
-.enter {
-  background-color: #874C62;
-  border: none;
-  color: #FFFFFF;
-  border-radius: 4px;
-  padding: 0.5em;
-  margin-top: .5em;
 }
 
 .password-error,
