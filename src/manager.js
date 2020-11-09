@@ -23,8 +23,8 @@ class Manager {
   }
 
   findGuestBookings(name, passedUserData, passedBookData) {
-  let foundGuest = this.findGuest(name, passedUserData)
-  let foundBookings = user.findBookings(foundGuest.id, passedBookData)
+  // let foundGuest = this.findGuest(name, passedUserData)
+  let foundBookings = user.findBookings(name, passedBookData)
   return foundBookings
   }
   

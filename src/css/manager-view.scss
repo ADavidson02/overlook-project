@@ -1,13 +1,12 @@
-$text-color: #FFFFFF;
+$primary-background: #A7D2CB;
+$text-color: #414141;
+$body-font-family: 'Open Sans';
 
 
-.today {
-  size: 23em;
-}
-.manager-dashboard,
+
 .manager {
   color: $text-color;
-  display: block;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
@@ -17,4 +16,12 @@ $text-color: #FFFFFF;
 
 .hidden {
   display: none;
+}
+
+.search-guest {
+  @extend .manager;
+}
+
+.manager-dashboard {
+  @extend .manager;
 }

@@ -42,6 +42,14 @@ describe('Manager', () => {
       "bedSize":"king",
       "numBeds":1,
       "costPerNight":491.14
+    },  
+    {
+      "number":24,
+      "roomType":"suite",
+      "bidet":false,
+      "bedSize":"queen",
+      "numBeds":1,
+      "costPerNight":327.24
     }];
     
     userData = [
@@ -74,7 +82,7 @@ describe('Manager', () => {
   })
   
   it('should return the amount a user has spent', () => {
-    expect(manager.amountSpent("Leatha Ullrich", userData, roomData, bookingsData)).to.equal('$327.24')
+    expect(manager.amountSpent("Earline Hamill", userData, roomData, bookingsData)).to.equal('$327.24')
   })
   
 })

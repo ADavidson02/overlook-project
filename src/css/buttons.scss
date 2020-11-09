@@ -1,0 +1,52 @@
+$primary-background: #A7D2CB;
+$text-color: #414141;
+$body-font-family: 'Open Sans';
+$navigation-button-color: #F2D388;
+
+.guest-login {
+  color: $navigation-button-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  size: 20em;
+  margin: 2em;
+  color: $text-color;
+}
+
+.new-reservation-button,
+{
+  background-color: $navigation-button-color;
+  border: none;
+  color: $text-color;
+  border-radius: 4px;
+  padding: 0.5em;
+  margin-top: .5em;
+  margin-left: 2em;
+}
+
+.home-button-manager {
+  @extend .new-reservation-button;
+}
+.home-button-guest {
+  @extend .new-reservation-button;
+}
+
+.search-guest-view {
+  @extend .new-reservation-button;
+}
+
+.manager-login {
+  background-color: #874C62;
+  border: none;
+  color: #FFFFFF;
+  border-radius: 4px;
+  padding: 0.5em;
+  margin: 4em 0 2em 0;
+}
+
+
+.search-name {
+  @extend .manager-login;
+}
+

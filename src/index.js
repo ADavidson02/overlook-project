@@ -5,6 +5,7 @@
 import './css/base.scss';
 import './css/manager-view.scss';
 import './css/guest-view.scss';
+import './css/buttons.scss';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 // import './index.html'
@@ -26,13 +27,24 @@ window.addEventListener('click', windowOnClick);
 // const recievedGuestData = requests.fetchGuestData();
 // const recievedRoomData = requests.fetchRoomsData();
 // const recievedBookingsData = requests.fetchBookingsData();
+
 const loginPage = document.querySelector('.login');
 let usernameCaptured = document.querySelector('.username-input');
 const passwordCaptured = document.querySelector('.password-input');
 const usernameError = document.querySelector('.username-error');
 const passwordError = document.querySelector('.password-error');
 const guestViews = document.querySelector('.user-view')
-const managerViews = document.querySelector('.manager-view');
+const managerViews = document.querySelector('.manager-view')
+const managerDashboard = document.querySelector('.manager-dashboard');
+let homeButtonManger = document.querySelector('.home-button-manager');
+let homeButtonGuest = document.querySelector('.home-button-guest')
+let newReservationButton = document.querySelector('.new-reservation-button');
+let searchGuestViewButton = document.querySelector('.search-guest-view');
+let searchNameButton = document.querySelector('.search-name');
+let searchNameInput = document.querySelector('.search-name-input');
+let searchGuestTitle = document.querySelector('.search-guest');
+
+
 // let roomsAvailableTonight = document.querySelector('.available-tonight');
 // let hotelRevenueTonight = document.querySelector('.hotel-revenue');
 // let hotelOccupancyTonight = document.querySelector('.hotel-occupancy');
@@ -48,7 +60,7 @@ function hideItem(toHide) {
   toHide.classList.add("hidden");
 }
   
-  function showItem(toShow) {
+function showItem(toShow) {
   toShow.classList.remove("hidden");
 }
 
@@ -57,6 +69,7 @@ function hideItem(toHide) {
 // let todaysBookings 
 let dom
 let user
+let manager
 window.onload = getData;
 
 function getData()  {
@@ -74,14 +87,14 @@ function getData()  {
 function windowOnClick(event) {
   if (event.target.classList.contains('manager-login')) {
     // startApp() 
-
+    manager = new Manager()
     // checkManagerUsername(usernameCaptured);
     // checkForPassword(passwordCaptured);
     // if(checkManagerUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
       let today = getTodaysDate() 
       runManger(today);
       domUpdates.todaysAvailable(today, bookingsData);
-      domUpdates.todaysTotalRevenue(today, roomsData, bookingsData);
+      domUpdates.todaysTotalRevenue(today, roomsData.rooms, bookingsData.bookings);
       domUpdates.todaysOccupancy(today, roomsData, bookingsData);
     // }
   }
@@ -93,6 +106,23 @@ function windowOnClick(event) {
       runGuest()  
     // }
   }
+  if (event.target.classList.contains('search-guest-view')) {
+    hideItem(managerDashboard);
+    showItem(searchGuestViewButton);
+    showItem(searchNameInput);
+    showItem(homeButtonManger);
+    showItem(newReservationButton);
+    showItem(searchGuestTitle);
+    showItem(searchNameButton)
+    
+  }
+  if (event.target.classList.contains('search-name')) {
+    hideItem(searchGuestTitle);
+    hideItem(searchNameInput);
+    hideItem(searchNameButton);
+    searchGuestDatabase(searchNameInput.value, guestData, roomsData, bookingsData)
+  }
+    
 }
 
 function checkManagerUsername(inputName) {
@@ -134,9 +164,14 @@ function lowerCaseInput(input) {
 }
 
 function runManger(date) {
-  hideItem(loginPage)
-  hideItem(guestViews)
+  hideItem(loginPage);
+  hideItem(guestViews);
+  hideItem(searchNameButton)
+  hideItem(searchNameInput)
   showItem(managerViews);
+  showItem(managerDashboard);
+  showItem(newReservationButton);
+  showItem(searchGuestViewButton);
 }
 
 function checkGuestUsername(inputName) {
@@ -159,6 +194,7 @@ function runGuest() {
   hideItem(loginPage)
   hideItem(managerViews)
   showItem(guestViews)
+  showItem(newReservationButton);
   let userNumber = usernameCaptured.value.slice(8,10)
   user = new User(+userNumber)
   loadGuestDashboard(+userNumber)
@@ -208,7 +244,7 @@ function getTodaysDate() {
 
 
 function loadGuestDashboard(id) {
-  let allGuestBookings = user.findBookings(id, bookingsData);
+  let allGuestBookings = user.findBookings(id, bookingsData.bookings);
   let sortedDates = arrangerByDate(allGuestBookings)
   let allDetails = getDetails(sortedDates)
   domUpdates.displayGuestBookings(allDetails)
@@ -247,6 +283,12 @@ function getDetails(data) {
     })
     return allDetails
   }, [])
+}
+
+function searchGuestDatabase(name, passedUserData, passedRoomData, passedBookData) {
+  let searchedGuest = manager.findGuest(searchNameInput.value, guestData.users)
+  console.log('index', searchedGuest.name)
+  domUpdates.displayGuest(searchedGuest, guestData, roomsData.rooms, bookingsData.bookings)
 }
 
 // function displayguestTotal(id) {
