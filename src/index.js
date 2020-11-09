@@ -247,7 +247,7 @@ function getDetails(data) {
 function searchGuestDatabase(name, passedUserData, passedRoomData, passedBookData) {
   let searchedGuest = manager.findGuest(searchNameInput.value, guestData.users)
   domUpdates.displaySearchedGuestBookings(searchedGuest, guestData, bookingsData.bookings)
-  domUpdates.displaySearchedGuestName(searchedGuest)
+  domUpdates.displaySearchedGuestName(searchNameInput.value)
   domUpdates.displaySearchedGuestTotal(searchNameInput.value, guestData.users, roomsData.rooms, bookingsData.bookings)
 }
 

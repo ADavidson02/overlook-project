@@ -20,6 +20,7 @@ let searchedGuestResult = document.querySelector('.user-search-results')
 const domUpdates = { 
   todaysAvailable(date, passedBookingData) {
     let emptyRooms = booking.availableRooms(date, passedBookingData.bookings);
+  
     let roomCount = 
     `
     <div class="today-available">
@@ -82,11 +83,10 @@ const domUpdates = {
   
   
   displaySearchedGuestName(name) {
-  
     let displayName = 
       `
       <div class="searched-name">
-        <h3>Guest: ${name.name}</h3>
+        <h3>Guest: ${name}</h3>
       </div>
       `
       searchedGuestResult.insertAdjacentHTML('afterbegin', displayName)
@@ -96,6 +96,15 @@ const domUpdates = {
   
     // let searchedGuest = manager.findGuest(name, passedUserData)
     let searchedGuestBookings = manager.findGuestBookings(name.id, passedUserData, passedBookData)
+    if (searchedGuestBookings.length === 0 ) {
+      let displaySearchedGuest = 
+      `
+      <div class="found-guest-result">
+        <p>Sorry there were no bookings found for the searched name</p>
+      </div>
+      `
+      searchedGuestResult.insertAdjacentHTML('beforeend', displaySearchedGuest)
+    } 
     searchedGuestBookings.forEach( booking => {
       let displaySearchedGuest = 
       `
