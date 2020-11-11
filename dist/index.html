@@ -13,17 +13,17 @@
           <button class="home-button-guest hidden">Home</button>
           <button class="home-button-manager hidden">Home</button>
           <button class="new-reservation-button hidden" >New Reservation</button>
-          <button class="search-guest-view hidden">Search Guest</button>
+          <button class="search-guest-view-button hidden">Search Guest</button>
         </ul>
       </nav>
     </header>
   <wrapper class="center">
     <div class="login">
-      <h2 class="username-heading">Username:</h2>
-        <input class="username-input" type="text" name="username" maxlength="10" required>
+      <label for="username"><h2 class="username-heading">Username:</h2>
+        <input id="username" class="username-input" type="text" name="username" maxlength="10" required>
         <p class="username-error hidden">Username does not match</p>
-      <h2 class="password-heading">Password:</h2>
-        <input class="password-input" type="password" name="password" maxlength="12" required>
+      <h2 for="password" class="password-heading">Password:</h2>
+        <input id="password" class="password-input" type="password" name="password" maxlength="12" required>
         <p class="password-error hidden">Password does not match</p>
       <button class="guest-login">Log In</button>
       <button class="manager-login">Manager Log In</button> 
@@ -33,25 +33,41 @@
         <h2 class="today">Today's totals</h2>
         <p class="available-tonight">Total Rooms available for today</p>
         <p class="hotel-revenue">Total revenue for today</p> 
-        <p class="hotel-occupancy">Percentage of rooms available for today</p> 
+        <p class="hotel-occupancy">Percentage of rooms occupied today</p> 
       </wrapper>
-      <wrapper calss="manager-search">
-        <p class="search-guest hidden">Search Guest Database:</p>
-        <input class="search-name-input hidden">
-        <button class="search-name">Search</button>
-      </wrapper>
+      <div class="manager-search">
+        <!-- <form> -->
+        <label  class="search-guest hidden">Search Guest Database:</p>
+        <input id="search-guest" class="search-name-input hidden">
+        <button for="search-guest" class="search-name">Search</button>
+      <!-- </form> -->
+      </div>
       <wrapper class="user-search-results hidden">
-        <p>Results:</p>
+        <p> All Bookings:</p>
       </wrapper>
-      <wrapper>
+      <!-- <wrapper> -->
     </div>
     <div class="user-view hidden">
-      <wrapper class="user-dashboard">
+      <wrapper class="user-dashboard hidden">
         <p class="guest-bookings-display">My Bookings:</p>
         <h3 class="guest-total-spent">Total spent</h3>
       </wrapper>
-    </wrapper>
+      <div class="new-reservation-search hidden">
+        <!-- <form> -->
+        <label class="reservation-title" for="reservation">New Reservation Date</label>
+        <input type="date" class="reservation-calandar" name="reservation-date" min="2020-11-01" max="2021-06-01">
+        <button class="reservation-search-button"> Search</button>
+        <!-- </form> -->
+      </div>
+      <wrapper class="date-results-view">
+        <button class="filter-search">Filter</button>
+          <input class="filter-input hidden">
+          <button class="search-filtered hidden">search</button>
+        <article class="date-search-results">Available Rooms for date</article>
+      </wrapper>
+    <!-- </wrapper> -->
     </div>
+  </wrapper>
     <!-- <footer>
       <img class="turing" src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
     </footer> -->

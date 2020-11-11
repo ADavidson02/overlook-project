@@ -2,6 +2,7 @@ $primary-background: #A7D2CB;
 $text-color: #414141;
 $body-font-family: 'Open Sans';
 $navigation-button-color: #F2D388;
+$active-color: #874C62;
 
 .guest-login {
   color: $navigation-button-color;
@@ -14,8 +15,7 @@ $navigation-button-color: #F2D388;
   color: $text-color;
 }
 
-.new-reservation-button,
-{
+.new-reservation-button {
   background-color: $navigation-button-color;
   border: none;
   color: $text-color;
@@ -23,17 +23,21 @@ $navigation-button-color: #F2D388;
   padding: 0.5em;
   margin-top: .5em;
   margin-left: 2em;
+  
 }
 
 .home-button-manager {
   @extend .new-reservation-button;
+
 }
+
 .home-button-guest {
   @extend .new-reservation-button;
 }
 
-.search-guest-view {
+.search-guest-view-button {
   @extend .new-reservation-button;
+
 }
 
 .manager-login {
@@ -45,8 +49,33 @@ $navigation-button-color: #F2D388;
   margin: 4em 0 2em 0;
 }
 
+.reservation-search-button {
+  @extend .manager-login;
+}
 
 .search-name {
   @extend .manager-login;
 }
+
+.filter-search {
+  @extend .manager-login;
+}
+
+.search-filtered {
+  @extend .manager-login;
+}
+
+
+.book-room {
+  @extend .new-reservation-button;
+  margin: 0 0 .5em 0;
+  
+  &:active {
+    color: $active-color;
+  }
+}
+
+
+
+
 
