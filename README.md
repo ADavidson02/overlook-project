@@ -21,5 +21,3 @@ Contributor:
 
 Amanda Davidson 
 @ADavidson02
-  
-
