@@ -9,6 +9,9 @@ class Manager {
   }
   
   findGuest(name, passedUserData) {
+    if ( name === undefined) {
+      return 
+    }
    let searchName = name.replace(/\w\S*/g, function(name){return name.charAt(0).toUpperCase() + name.substr(1).toLowerCase();});
     let foundUser = passedUserData.find(user => {
     if(user.name === searchName) {
@@ -17,21 +20,27 @@ class Manager {
    })
    if(foundUser !== undefined) {
      return foundUser
-   } else {
+   } else if ( foundUser === undefined) {
      return `Sorry no user was found with the name ${name}`
    }
   }
+  
 
   findGuestBookings(name, passedUserData, passedBookData) {
-  // let foundGuest = this.findGuest(name, passedUserData)
-
-  let foundBookings = user.findBookings(name, passedBookData)
-  console.log('man', name)
+  let foundGuest = this.findGuest(name, passedUserData)
+  if (foundGuest === undefined) {
+    return 
+  }
+  let foundBookings = user.findBookings(foundGuest.id, passedBookData)
+  
   return foundBookings
   }
   
   amountSpent(searchName, passedUserData, passedRoomData, passedBookData) {
     let foundGuest = this.findGuest(searchName, passedUserData)
+    if (foundGuest === undefined) {
+      return 
+    }
     let foundTotal = user.findTotalSpent(foundGuest.id, passedRoomData, passedBookData);
     return foundTotal
   } 

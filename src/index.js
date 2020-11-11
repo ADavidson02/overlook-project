@@ -24,9 +24,6 @@ import './css/manager-view.scss';
 import './css/guest-view.scss';
 
 window.addEventListener('click', windowOnClick);
-// const recievedGuestData = requests.fetchGuestData();
-// const recievedRoomData = requests.fetchRoomsData();
-// const recievedBookingsData = requests.fetchBookingsData();
 
 const loginPage = document.querySelector('.login');
 let usernameCaptured = document.querySelector('.username-input');
@@ -36,26 +33,30 @@ const passwordError = document.querySelector('.password-error');
 const guestViews = document.querySelector('.user-view')
 const managerViews = document.querySelector('.manager-view')
 const managerDashboard = document.querySelector('.manager-dashboard');
+const guestDashboard = document.querySelector('.user-dashboard')
 let homeButtonManger = document.querySelector('.home-button-manager');
 let homeButtonGuest = document.querySelector('.home-button-guest')
 let newReservationButton = document.querySelector('.new-reservation-button');
-let searchGuestViewButton = document.querySelector('.search-guest-view');
+let searchGuestViewButton = document.querySelector('.search-guest-view-button');
 let searchNameButton = document.querySelector('.search-name');
 let searchNameInput = document.querySelector('.search-name-input');
 let searchGuestTitle = document.querySelector('.search-guest');
 let searchedGuestTitle = document.querySelector('.user-search-results');
-
-
-// let roomsAvailableTonight = document.querySelector('.available-tonight');
-// let hotelRevenueTonight = document.querySelector('.hotel-revenue');
-// let hotelOccupancyTonight = document.querySelector('.hotel-occupancy');
-
-// let guestBookingDisplay = document.querySelector('.guest-bookings-display');
-// let guestTotalSpent = document.querySelector('.guest-total-spent');
+const newReservatioView = document.querySelector('.new-reservation-search');
+const searchForRoom = document.querySelector('.reservation-search-button');
+const searchDateInput = document.querySelector('.reservation-calandar'); 
+const searchDateResultsView = document.querySelector('.date-results-view');
+const roomSearchFilterButton = document.querySelector('.filter-search');
+const filterInput = document.querySelector('.filter-input');
+const searchFilteredButton = document.querySelector('.search-filtered');
+let searchDateResults = document.querySelector('.date-search-results');
 
 let guestData;
 let roomsData;
 let bookingsData;
+let dom
+let user
+let manager
 
 function hideItem(toHide) {
   toHide.classList.add("hidden");
@@ -65,10 +66,6 @@ function showItem(toShow) {
   toShow.classList.remove("hidden");
 }
 
-
-let dom
-let user
-let manager
 window.onload = getData;
 
 function getData()  {
@@ -80,59 +77,116 @@ function getData()  {
       guestData = value[0];
       roomsData = value[1];
       bookingsData = value[2];
+      console.log(bookingsData)
     })
 }
 
 function windowOnClick(event) {
   if (event.target.classList.contains('manager-login')) {
-    // startApp() 
+    checkManagerUsername(usernameCaptured);
+    checkForPassword(passwordCaptured);
     manager = new Manager()
-    // checkManagerUsername(usernameCaptured);
-    // checkForPassword(passwordCaptured);
-    // if(checkManagerUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
+    if(checkManagerUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
       let today = getTodaysDate() 
-      runManger(today);
+      runManger();
       domUpdates.todaysAvailable(today, bookingsData);
       domUpdates.todaysTotalRevenue(today, roomsData.rooms, bookingsData.bookings);
       domUpdates.todaysOccupancy(today, roomsData, bookingsData);
-    // }
+    }
   }
   if (event.target.classList.contains('guest-login')) {
-    // startApp() 
-    // checkGuestUsername(usernameCaptured);
-    // checkForPassword(passwordCaptured);
-    // if(checkGuestUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
+    checkGuestUsername(usernameCaptured);
+    checkForPassword(passwordCaptured);
+    if(checkGuestUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
+      showItem(guestViews)
+      showItem(guestDashboard)
+      showItem(newReservationButton);
       runGuest()  
-    // }
+
+    }
   }
-  if (event.target.classList.contains('search-guest-view')) {
-    hideItem(managerDashboard);
-    hideItem(searchedGuestTitle)
-    showItem(searchGuestViewButton);
+  if (event.target.classList.contains('search-guest-view-button')) {
     showItem(searchNameInput);
     showItem(homeButtonManger);
     showItem(newReservationButton);
     showItem(searchGuestTitle);
     showItem(searchNameButton)
-    
+    hideItem(managerDashboard);
+    hideItem(searchedGuestTitle)
+    hideItem(homeButtonGuest)
+    hideItem(searchGuestViewButton)
     
   }
   if (event.target.classList.contains('search-name')) {
+    showItem(searchedGuestTitle)
     hideItem(searchGuestTitle);
     hideItem(searchNameInput);
     hideItem(searchNameButton);
-    showItem(searchedGuestTitle)
+    hideItem(loginPage)
     searchGuestDatabase(searchNameInput.value, guestData, roomsData, bookingsData)
   }
   if (event.target.classList.contains('home-button-manager')) {
-    hideItem(searchNameButton)
-    hideItem(searchGuestTitle)
-    hideItem(homeButtonManger)
-    hideItem(searchNameInput)
-    hideItem(searchedGuestTitle)
+    searchNameInput.value = ' ';
     showItem(managerDashboard)
-    showItem(searchGuestViewButton)
+    runManger()
+    // hideItem(searchGuestViewButton)
+    // hideItem(searchNameButton)
+    // hideItem(searchGuestTitle)
+    // hideItem(homeButtonManger)
+    // hideItem(searchNameInput)
+    // hideItem(searchedGuestTitle)
+    // hideItem(homeButtonGuest)
+    // hideItem(searchedGuestTitle)
+    // showItem(searchNameButton)
+  }
+  
+  if (event.target.classList.contains('new-reservation-button')) {
+    showItem(homeButtonGuest)
+    showItem(newReservatioView)
+    hideItem(guestDashboard)
+    hideItem(newReservationButton)
+    hideItem(searchDateResultsView)
+    hideItem(homeButtonManger)
+    hideItem(roomSearchFilterButton)
+  }
+  
+  if (event.target.classList.contains('reservation-search-button')) {
+    console.log('value', searchDateInput.value)
+    hideItem(newReservatioView)
+    domUpdates.roomResults( searchDateInput.value, roomsData.rooms, bookingsData.bookings)  
+    showItem(roomSearchFilterButton)
+    showItem(searchDateResultsView)
+  }
+  
+  if (event.target.classList.contains('home-button-guest')) {
     
+    loadGuestDashboard(user.guestData)
+    hideItem(searchDateResultsView);
+    showItem(guestDashboard);
+    showItem(newReservationButton);
+    hideItem(homeButtonGuest);
+    hideItem(searchFilteredButton);
+    hideItem(filterInput)
+    hideItem(roomSearchFilterButton)
+    filterInput.value = '';
+    searchDateResults.innerHTML = '';
+  }
+  
+  if (event.target.classList.contains('filter-search')) {
+    showItem(filterInput)
+    showItem(searchFilteredButton)
+    hideItem(roomSearchFilterButton)
+  }
+  if (event.target.classList.contains('search-filtered')) {
+    domUpdates.showFiltered(filterInput.value);
+  }
+  
+  if (event.target.classList.contains('book-room')) {
+    let roomNumber = event.target.parentNode.id
+    let today = getTodaysDate()
+    // requests.postNewBooking(user.guestData, today, +roomNumber)
+    // loadGuestDashboard(user.guestData)
+    // hideItem(searchDateResultsView)
   }
 }
 
@@ -174,14 +228,13 @@ function lowerCaseInput(input) {
   return input.toLowerCase()
 }
 
-function runManger(date) {
+function runManger() {
   hideItem(loginPage);
   hideItem(guestViews);
   hideItem(searchNameButton)
   hideItem(searchNameInput)
   showItem(managerViews);
   showItem(managerDashboard);
-  showItem(newReservationButton);
   showItem(searchGuestViewButton);
 }
 
@@ -204,8 +257,7 @@ function checkGuestUsername(inputName) {
 function runGuest() {
   hideItem(loginPage)
   hideItem(managerViews)
-  showItem(guestViews)
-  showItem(newReservationButton);
+  hideItem(searchDateResultsView)
   let userNumber = usernameCaptured.value.slice(8,10)
   user = new User(+userNumber)
   loadGuestDashboard(+userNumber)
@@ -249,5 +301,6 @@ function searchGuestDatabase(name, passedUserData, passedRoomData, passedBookDat
   domUpdates.displaySearchedGuestBookings(searchedGuest, guestData, bookingsData.bookings)
   domUpdates.displaySearchedGuestName(searchNameInput.value)
   domUpdates.displaySearchedGuestTotal(searchNameInput.value, guestData.users, roomsData.rooms, bookingsData.bookings)
+  searchNameInput.value = " "
 }
 

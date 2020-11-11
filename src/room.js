@@ -6,10 +6,11 @@ class Room {
     this.roomData = roomData;
   }
   
-  filterType(input) {
+  filterType(input, passedRoomData) {
+    console.log('roomjs', passedRoomData)
     let checkInput = input.toLowerCase()
-    let choices = roomData.reduce((results, room) => {
-      if(room.roomType === checkInput) {
+    let choices = passedRoomData.reduce((results, room) => {
+      if(room.roomType.includes(checkInput)) {
         results.push(room)
       }
         return results
@@ -17,7 +18,7 @@ class Room {
     if(choices.length > 0) {
       return choices
     } else {
-      return "We apologize no rooms match your search, please alter your search and try again"
+      return undefined
     }
   }
 }

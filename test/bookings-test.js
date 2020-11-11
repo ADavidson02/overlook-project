@@ -53,7 +53,12 @@ describe ('Booking', () => {
   })
   
   it('should have an amount of room that are available for today', () => {
-    expect(booking.availableRooms("2020/04/22", bookingsData)).to.equal(24);
+    expect(booking.availableRoomAmount("2020/04/22", bookingsData)).to.equal(24);
+  })
+  
+  
+  it('should have a list of available rooms for a date', () => {
+      expect(booking.availableRooms("2020/04/22", roomData, bookingsData)).to.have.lengthOf(5)
   })
   
   it('should return the total revenue for a date', () => {

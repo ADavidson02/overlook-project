@@ -20,16 +20,16 @@ const requests = {
     .catch(error => console.log(error))
   },
   
-  postNewBooking() {
+  postNewBooking(userID, date, roomNumber) {
     return fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "userID": 22,
-      "date": "2019/09/23",
-      "roomNumber": 4
+      userID: userID,
+      date: date,
+      roomNumber: roomNumber
   }),
   })
     .then(response => response.json())
