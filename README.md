@@ -8,7 +8,7 @@ This project is a hotel app that can be used by both guests of the hotel and man
 * Chai/Mocha
 
 ## Testing
-There are test that are to used with the bookings, manager, rooms, and user classes. 
+There are tests that are to used with the bookings, manager, rooms, and user classes. 
 
 ### Project
 When a guest signs in on their dashboard they will see a full list of all of their bookings along with their lifetime total at the bottom. From this view the guest has the option to click the "New Reservation" button where they will input a date and click the search button. They will be returned a list of available rooms for this date and at this point have the choice to filter the room type.
