@@ -1,6 +1,3 @@
-// import roomData from '../test/sample-room-data.js';
-
-
 class Room {
   constructor (roomData) {
     this.roomData = roomData;

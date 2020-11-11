@@ -1,6 +1,3 @@
- 
-// import Room from '../src/room';
-
 class Booking {
   constructor(booking) {
     this.booking = booking;

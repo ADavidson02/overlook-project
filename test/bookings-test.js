@@ -1,16 +1,11 @@
 import {expect} from 'chai';
-
-// import User from '../src/user';
-// import Room from '../src/room';
 import roomData from './sample-room-data.js';
-// import bookingsData from './sample-bookings-data.js';
 import Booking from '../src/booking';
 
 describe ('Booking', () => {
   let booking, bookingsData
   
   beforeEach(() => {
-    // user1 = new User({"id":1, "name":"Leatha Ullrich"});
     
     booking = new Booking ({
       "id": "5fwrgu4i7k55hl6t8",
@@ -55,7 +50,6 @@ describe ('Booking', () => {
   it('should have an amount of room that are available for today', () => {
     expect(booking.availableRoomAmount("2020/04/22", bookingsData)).to.equal(24);
   })
-  
   
   it('should have a list of available rooms for a date', () => {
     expect(booking.availableRooms("2020/04/22", roomData, bookingsData)).to.have.lengthOf(5)

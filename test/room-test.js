@@ -1,14 +1,10 @@
 import {expect} from 'chai';
-
-// import User from '../src/user';
 import Room from '../src/room';
-// import roomData from './sample-room-data.js';
 
 describe('Room', () => {
   let room, roomData, room1
   
   beforeEach(() => {
-    // user1 = new User({"id":1, "name":"Leatha Ullrich"});
   
     roomData = [{
       "number": 1,

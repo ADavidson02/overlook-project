@@ -1,6 +1,4 @@
 import userData from '../test/sample-user-data.js';
-// import bookingsData from '../test/sample-bookings-data.js';
-// import roomData from '../test/sample-room-data.js';
 import User from '../src/user';
 let user = new User(userData);
 

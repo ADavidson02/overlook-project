@@ -11,11 +11,7 @@ import './css/buttons.scss';
 // import './index.html'
 import './images/turing-logo.png'
 
-console.log('This is the JavaScript entry file - your code begins here.');
-
 import User from '../src/user';
-// import Room from '../src/room';
-// import Booking from '../src/booking';
 import Manager from '../src/manager';
 import requests from './fetch';
 import domUpdates from './dom-display';
@@ -77,7 +73,6 @@ function getData()  {
       guestData = value[0];
       roomsData = value[1];
       bookingsData = value[2];
-      console.log(bookingsData)
     })
 }
 
@@ -129,15 +124,6 @@ function windowOnClick(event) {
     searchNameInput.value = ' ';
     showItem(managerDashboard)
     runManger()
-    // hideItem(searchGuestViewButton)
-    // hideItem(searchNameButton)
-    // hideItem(searchGuestTitle)
-    // hideItem(homeButtonManger)
-    // hideItem(searchNameInput)
-    // hideItem(searchedGuestTitle)
-    // hideItem(homeButtonGuest)
-    // hideItem(searchedGuestTitle)
-    // showItem(searchNameButton)
   }
   
   if (event.target.classList.contains('new-reservation-button')) {
@@ -151,7 +137,6 @@ function windowOnClick(event) {
   }
   
   if (event.target.classList.contains('reservation-search-button')) {
-    console.log('value', searchDateInput.value)
     hideItem(newReservatioView)
     domUpdates.roomResults( searchDateInput.value, roomsData.rooms, bookingsData.bookings)  
     showItem(roomSearchFilterButton)
@@ -265,7 +250,7 @@ function runGuest() {
 function getTodaysDate() {
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
   var yyyy = today.getFullYear();
   return today = yyyy + '/' + mm + '/' + dd;
 }

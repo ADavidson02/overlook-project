@@ -1,10 +1,4 @@
 import {expect} from 'chai';
-
-// import User from '../src/user';
-// import Room from '../src/room';
-// import roomData from './sample-room-data.js';
-// import bookingsData from './sample-bookings-data.js';
-// import Booking from '../src/booking';
 import Manager from '../src/manager'
 
 describe('Manager', () => {

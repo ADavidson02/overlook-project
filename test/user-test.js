@@ -1,7 +1,5 @@
 import { expect } from 'chai';
-
 import User from '../src/user';
-// import userData from '../test/sample-user-data.js';
 import bookingsData from '../test/sample-bookings-data.js';
 import roomData from '../test/sample-room-data.js';
 
