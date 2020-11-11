@@ -1,30 +1,30 @@
 import {expect} from 'chai';
 
-import User from '../src/user';
-import Room from '../src/room';
+// import User from '../src/user';
+// import Room from '../src/room';
 import roomData from './sample-room-data.js';
-import bookingsData from './sample-bookings-data.js';
+// import bookingsData from './sample-bookings-data.js';
 import Booking from '../src/booking';
 
 describe ('Booking', () => {
-  let user1, booking, bookingsData
+  let booking, bookingsData
   
   beforeEach(() => {
-    user1 = new User({"id":1, "name":"Leatha Ullrich"});
+    // user1 = new User({"id":1, "name":"Leatha Ullrich"});
     
     booking = new Booking ({
-      "id":"5fwrgu4i7k55hl6t8",
-      "userID":1,
-      "date":"2020/02/05",
-      "roomNumber":12,
-      "roomServiceCharges":[]
+      "id": "5fwrgu4i7k55hl6t8",
+      "userID": 1,
+      "date": "2020/02/05",
+      "roomNumber": 12,
+      "roomServiceCharges": []
     });
     
     bookingsData = [
-      {"id":"5fwrgu4i7k55hl6sz","userID":9,"date":"2020/04/22","roomNumber":15,"roomServiceCharges":[]},
-      {"id":"5fwrgu4i7k55hl6t5","userID":43,"date":"2020/01/24","roomNumber":24,"roomServiceCharges":[]},
-      {"id":"5fwrgu4i7k55hl6t6","userID":13,"date":"2020/01/10","roomNumber":12,"roomServiceCharges":[]},
-      {"id":"5fwrgu4i7k55hl6t7","userID":20,"date":"2020/02/16","roomNumber":7,"roomServiceCharges":[]}
+      {"id": "5fwrgu4i7k55hl6sz", "userID": 9, "date": "2020/04/22", "roomNumber": 15, "roomServiceCharges": []},
+      {"id": "5fwrgu4i7k55hl6t5", "userID": 43, "date": "2020/01/24", "roomNumber": 24, "roomServiceCharges": []},
+      {"id": "5fwrgu4i7k55hl6t6", "userID": 13, "date": "2020/01/10", "roomNumber": 12, "roomServiceCharges": []},
+      {"id": "5fwrgu4i7k55hl6t7", "userID": 20, "date": "2020/02/16", "roomNumber": 7, "roomServiceCharges": []}
     ]
   })
   
@@ -58,15 +58,15 @@ describe ('Booking', () => {
   
   
   it('should have a list of available rooms for a date', () => {
-      expect(booking.availableRooms("2020/04/22", roomData, bookingsData)).to.have.lengthOf(5)
+    expect(booking.availableRooms("2020/04/22", roomData, bookingsData)).to.have.lengthOf(5)
   })
   
   it('should return the total revenue for a date', () => {
-    expect(booking.totalRevenue("2020/02/16", bookingsData, roomData)).to.equal('$231.46');
-    expect(booking.totalRevenue("2020/04/23", bookingsData, roomData)).to.equal('$0');
+    expect(booking.totalRevenue("2020/02/16", roomData, bookingsData)).to.equal('$231.46');
+    expect(booking.totalRevenue("2020/04/23", roomData,  bookingsData)).to.equal('$0');
   })
   
   it('should return the percent of rooms booked for a date', () => {
-     expect(booking.occupancyTotal("2020/01/10", roomData, bookingsData)).to.equal('20%');
+    expect(booking.occupancyTotal("2020/01/10", roomData, bookingsData)).to.equal('20%');
   })
 })

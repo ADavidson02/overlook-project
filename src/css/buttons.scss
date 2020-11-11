@@ -70,10 +70,11 @@ $active-color: #874C62;
   @extend .new-reservation-button;
   margin: 0 0 .5em 0;
   
-  &:active {
-    color: $active-color;
+    &:active {
+  background-color: $active-color;
   }
 }
+
 
 
 

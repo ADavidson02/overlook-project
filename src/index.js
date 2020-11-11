@@ -14,8 +14,8 @@ import './images/turing-logo.png'
 console.log('This is the JavaScript entry file - your code begins here.');
 
 import User from '../src/user';
-import Room from '../src/room';
-import Booking from '../src/booking';
+// import Room from '../src/room';
+// import Booking from '../src/booking';
 import Manager from '../src/manager';
 import requests from './fetch';
 import domUpdates from './dom-display';
@@ -54,7 +54,7 @@ let searchDateResults = document.querySelector('.date-search-results');
 let guestData;
 let roomsData;
 let bookingsData;
-let dom
+// let dom
 let user
 let manager
 
@@ -86,7 +86,7 @@ function windowOnClick(event) {
     checkManagerUsername(usernameCaptured);
     checkForPassword(passwordCaptured);
     manager = new Manager()
-    if(checkManagerUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
+    if (checkManagerUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
       let today = getTodaysDate() 
       runManger();
       domUpdates.todaysAvailable(today, bookingsData);
@@ -97,7 +97,7 @@ function windowOnClick(event) {
   if (event.target.classList.contains('guest-login')) {
     checkGuestUsername(usernameCaptured);
     checkForPassword(passwordCaptured);
-    if(checkGuestUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
+    if (checkGuestUsername(usernameCaptured) === 'good' && checkForPassword(passwordCaptured) === 'good') {
       showItem(guestViews)
       showItem(guestDashboard)
       showItem(newReservationButton);
@@ -159,7 +159,6 @@ function windowOnClick(event) {
   }
   
   if (event.target.classList.contains('home-button-guest')) {
-    
     loadGuestDashboard(user.guestData)
     hideItem(searchDateResultsView);
     showItem(guestDashboard);
@@ -184,9 +183,7 @@ function windowOnClick(event) {
   if (event.target.classList.contains('book-room')) {
     let roomNumber = event.target.parentNode.id
     let today = getTodaysDate()
-    // requests.postNewBooking(user.guestData, today, +roomNumber)
-    // loadGuestDashboard(user.guestData)
-    // hideItem(searchDateResultsView)
+    requests.postNewBooking(user.guestData, today, +roomNumber)
   }
 }
 
@@ -195,15 +192,16 @@ function checkManagerUsername(inputName) {
   if (inputName.value.length === 0) {
     showItem(usernameError);
     return 
-  } else if(inputName.value.length > 0 ) {
+  } else if (inputName.value.length > 0 ) {
     let checkedUsername = inputName.value;
     let loweredUsername = lowerCaseInput(checkedUsername)
     if (loweredUsername !== 'manager') {
       showItem(usernameError)
       return
-    } else if (loweredUsername === 'manager')
-    hideItem(usernameError)
-    return 'good'
+    } else if (loweredUsername === 'manager') {
+      hideItem(usernameError)
+      return 'good'
+    }
   }
 } 
 
@@ -243,14 +241,15 @@ function checkGuestUsername(inputName) {
   if (inputName.value.length === 0) {
     showItem(usernameError);
     return 
-  } else if(inputName.value.length > 0 ) {
+  } else if (inputName.value.length > 0 ) {
     let checkedUsername = inputName.value
     let loweredUsername = lowerCaseInput(checkedUsername)
     if (!loweredUsername.includes('customer')) {
       showItem(usernameError)
       return
-    } else if (loweredUsername.includes('customer'))
-    return 'good'
+    } else if (loweredUsername.includes('customer')) {
+      return 'good'
+    }
   }
 } 
 
@@ -258,7 +257,7 @@ function runGuest() {
   hideItem(loginPage)
   hideItem(managerViews)
   hideItem(searchDateResultsView)
-  let userNumber = usernameCaptured.value.slice(8,10)
+  let userNumber = usernameCaptured.value.slice(8, 10)
   user = new User(+userNumber)
   loadGuestDashboard(+userNumber)
 }
@@ -280,7 +279,7 @@ function loadGuestDashboard(id) {
 }
 
 function arrangerByDate(guestReservations) {
-  return guestReservations.sort((a,b) => {
+  return guestReservations.sort((a, b) => {
     return new Date(b.date) - new Date(a.date)
   })
 }
@@ -288,8 +287,8 @@ function arrangerByDate(guestReservations) {
 function getDetails(data) {
   return data.reduce((allDetails, reservation) => {
     roomsData.rooms.forEach(room => {
-      if(room.number === reservation.roomNumber) {
-        allDetails.push({'date':reservation.date, 'roomInfo': room})
+      if (room.number === reservation.roomNumber) {
+        allDetails.push({'date': reservation.date, 'roomInfo': room})
       }
     })
     return allDetails

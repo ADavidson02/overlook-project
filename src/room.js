@@ -1,4 +1,4 @@
-import roomData from '../test/sample-room-data.js';
+// import roomData from '../test/sample-room-data.js';
 
 
 class Room {
@@ -7,15 +7,14 @@ class Room {
   }
   
   filterType(input, passedRoomData) {
-    console.log('roomjs', passedRoomData)
     let checkInput = input.toLowerCase()
     let choices = passedRoomData.reduce((results, room) => {
-      if(room.roomType.includes(checkInput)) {
+      if (room.roomType.includes(checkInput)) {
         results.push(room)
       }
-        return results
+      return results
     }, [])
-    if(choices.length > 0) {
+    if (choices.length > 0) {
       return choices
     } else {
       return undefined

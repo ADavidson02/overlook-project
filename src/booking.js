@@ -1,5 +1,5 @@
  
-import Room from '../src/room';
+// import Room from '../src/room';
 
 class Booking {
   constructor(booking) {
@@ -11,19 +11,20 @@ class Booking {
     let foundReservations = this.findReservations(newDate, passedBookData)
     let takenRooms = []
     let busyRooms = passedRoomData.filter(room => {
-        foundReservations.forEach(booking => {
-          if(room.number === booking.roomNumber)
-            takenRooms.push(room)
-          }) 
-        })
+      foundReservations.forEach(booking => {
+        if (room.number === booking.roomNumber) {
+          takenRooms.push(room)
+        }
+      }) 
+    })
     let roomsForRent = this.roomAvailable(takenRooms, passedRoomData)
     return roomsForRent
   }
   
   roomAvailable(occupiedRooms, passedRoomData) {
     let final = passedRoomData.filter(room => {
-        if(!occupiedRooms.includes(room)) {
-          return room 
+      if (!occupiedRooms.includes(room)) {
+        return room 
         }
     })
     return final 
@@ -41,8 +42,9 @@ class Booking {
     let list = this.findReservations(date, passedBookData);
      list.forEach(reservation => {
       passedRoomData.forEach(hotelRoom => {
-        if(hotelRoom.number === reservation.roomNumber)
-        total += hotelRoom.costPerNight
+        if (hotelRoom.number === reservation.roomNumber) {
+          total += hotelRoom.costPerNight
+        }
       });
     });
     let finalAmount = (Math.round(total * 1000) / 1000)
@@ -62,5 +64,4 @@ class Booking {
     return `${final}%`
   }
 }
-
-  export default Booking; 
+export default Booking; 
