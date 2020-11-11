@@ -94,7 +94,7 @@ const domUpdates = {
         <h3>Guest: ${name}</h3>
       </div>
       `
-      searchedGuestResult.insertAdjacentHTML('afterbegin', displayName)
+    searchedGuestResult.insertAdjacentHTML('afterbegin', displayName)
   }, 
 
   displaySearchedGuestBookings(name, passedUserData, passedBookData) {
@@ -116,7 +116,7 @@ const domUpdates = {
         </div>
         `
         searchedGuestResult.insertAdjacentHTML('beforeend', displaySearchedGuest)
-    })
+      })
     }
   },
   
@@ -131,25 +131,24 @@ const domUpdates = {
     searchedGuestResult.insertAdjacentHTML('afterend', displayTotal)
   },
   
-  roomResults(searchDate, passedRoomData, passedBookData){ 
-    console.log('value', searchDate)
+  roomResults(searchDate, passedRoomData, passedBookData) { 
     guestTotalSpent.innerHTML = '';
     searchDateResults.innerHTML = '';
     if (searchDate === undefined) {
       available = []
     }
-     available = booking.availableRooms(searchDate, passedRoomData, passedBookData)
-     if (available.length === 0)  {
+    available = booking.availableRooms(searchDate, passedRoomData, passedBookData)
+    if (available.length === 0)  {
        let displayAvailable = 
        `
        <div class="rooms-available">
         <h2> We sincerely apologize but there are no rooms available. Please try another date.</h2>
       </div>
        `
-       searchDateResults.insertAdjacentHTML('beforeend', displayAvailable);
-     } else {
-       available.forEach(room => {
-         let displayAvailable = 
+      searchDateResults.insertAdjacentHTML('beforeend', displayAvailable);
+    } else {
+      available.forEach(room => {
+        let displayAvailable = 
          `
          <article class="rooms-available" id="${room.number}">
          <h3>Room type ${room.roomType}</h3>
@@ -160,10 +159,10 @@ const domUpdates = {
          <button class="book-room">Book</button>
          </article>
          `
-         addBookButton = document.querySelector('.book-button');
-         searchDateResults.insertAdjacentHTML('beforeend', displayAvailable);
-       })
-     }
+        addBookButton = document.querySelector('.book-button');
+        searchDateResults.insertAdjacentHTML('beforeend', displayAvailable);
+      })
+    }
   },
   
   showFiltered(filterInput) {

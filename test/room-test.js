@@ -1,47 +1,63 @@
 import {expect} from 'chai';
 
-import User from '../src/user';
+// import User from '../src/user';
 import Room from '../src/room';
-import roomData from './sample-room-data.js';
+// import roomData from './sample-room-data.js';
 
 describe('Room', () => {
-  let user1, room, roomData, room1
+  let room, roomData, room1
   
   beforeEach(() => {
-    user1 = new User({"id":1, "name":"Leatha Ullrich"});
+    // user1 = new User({"id":1, "name":"Leatha Ullrich"});
   
     roomData = [{
-      "number":1,
-      "roomType":"residential suite",
-      "bidet":true,
-      "bedSize":"queen",
-      "numBeds":1,
-      "costPerNight":358.4
+      "number": 1,
+      "roomType": "residential suite",
+      "bidet": true,
+      "bedSize": "queen",
+      "numBeds": 1,
+      "costPerNight": 358.4
     },
     {
-      "number":2,
-      "roomType":"suite",
-      "bidet":false,
-      "bedSize":"full",
-      "numBeds":2,
-      "costPerNight":477.38
+      "number": 2,
+      "roomType": "suite",
+      "bidet": false,
+      "bedSize": "full",
+      "numBeds": 2,
+      "costPerNight": 477.38
     },
     {
-      "number":3,
-      "roomType":"single room",
-      "bidet":false,
-      "bedSize":"king",
-      "numBeds":1,
-      "costPerNight":491.14
+      "number": 7,
+      "roomType": "single room",
+      "bidet": false,
+      "bedSize": "queen",
+      "numBeds": 2,
+      "costPerNight": 231.46
+    },
+    {
+      "number": 4,
+      "roomType": "single room",
+      "bidet": false,
+      "bedSize": "queen",
+      "numBeds": 1,
+      "costPerNight": 429.44
+    },
+    {
+      "number": 24,
+      "roomType": "suite",
+      "bidet": false,
+      "bedSize": "queen",
+      "numBeds": 1,
+      "costPerNight": 327.24
     }];
     
     room1 = new Room({
-      "number":1,
-      "roomType":"residential suite",
-      "bidet":true,
-      "bedSize":"queen",
-      "numBeds":1,
-      "costPerNight":358.4
+      "number": 1,
+      "roomType": "residential suite",
+      "bidet": true,
+      "bedSize": "queen",
+      "numBeds": 1,
+      "costPerNight": 358.4
     });
     
     room = new Room(roomData);
@@ -52,7 +68,7 @@ describe('Room', () => {
   })
   
   it('should have a room number', () => {
-    expect(roomData[2].number).to.equal(3);
+    expect(roomData[2].number).to.equal(7);
   })
   
   it('should have a room type', () => {
@@ -65,7 +81,7 @@ describe('Room', () => {
   })
   
   it('should have a bedsize', () => {
-    expect(roomData[2].bedSize).to.equal('king');
+    expect(roomData[2].bedSize).to.equal('queen');
   })
   
   it('should have a number of beds', () => {
@@ -73,53 +89,44 @@ describe('Room', () => {
   })
   
   it('should have a price per night', () => {
-    expect(roomData[2].costPerNight).to.equal(491.14)
+    expect(roomData[4].costPerNight).to.equal(327.24)
   })
   
   it('should be able to filter room by type', () => {
-    expect(room.filterType('single room')).to.deep.equal([
-    {
-       number: 7,
-       roomType: 'single room',
-       bidet: false,
-       bedSize: 'queen',
-       numBeds: 2,
-       costPerNight: 231.46
-     },
-    {
-      number: 4,
-      roomType: 'single room',
-      bidet: false,
-      bedSize: 'queen',
-      numBeds: 1,
-      costPerNight: 429.44
-    }
+    expect(room.filterType('single room', roomData)).to.deep.equal([
+      {
+        number: 7,
+        roomType: 'single room',
+        bidet: false,
+        bedSize: 'queen',
+        numBeds: 2,
+        costPerNight: 231.46
+      },
+      {
+        number: 4,
+        roomType: 'single room',
+        bidet: false,
+        bedSize: 'queen',
+        numBeds: 1,
+        costPerNight: 429.44
+      }
     ])
   })
   
   it('should have an error if no rooms are available when filtered', () => {
-    expect(room.filterType('junior suite')).to.equal("We apologize no rooms match your search, please alter your search and try again")
+    expect(room.filterType('junior suite', roomData)).to.equal(undefined)
   })
   
   it('should check input', ()  => {
-    expect(room.filterType('SUITE')).to.deep.equal([
-    {
-      number: 2,
-      roomType: 'suite',
-      bidet: false,
-      bedSize: 'full',
-      numBeds: 2,
-      costPerNight: 477.38
-    },
-    {
-      number: 24,
-      roomType: 'suite',
-      bidet: false,
-      bedSize: 'queen',
-      numBeds: 1,
-      costPerNight: 327.24
-    }
-  ])
+    expect(room.filterType('RESIDENTIAL', roomData)).to.deep.equal([
+      {
+        number: 1,
+        roomType: 'residential suite',
+        bidet: true,
+        bedSize: 'queen',
+        numBeds: 1,
+        costPerNight: 358.4
+      }
+    ])
   })
-  
 })

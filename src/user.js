@@ -1,11 +1,11 @@
-import Booking from '../src/booking';
-import Room from '../src/room';
-import bookingsData from '../test/sample-bookings-data.js';
-import roomData from '../test/sample-room-data.js';
-import guestData from '../test/sample-user-data.js';
+// import Booking from '../src/booking';
+// import Room from '../src/room';
+// import bookingsData from '../test/sample-bookings-data.js';
+// import roomData from '../test/sample-room-data.js';
+// import guestData from '../test/sample-user-data.js';
 
 class User  {
-  constructor (guestData){
+  constructor (guestData) {
     this.guestData = guestData;
   }
   
@@ -22,8 +22,8 @@ class User  {
   findTotalSpent(passedId, passedRoomData, passedBookData) {
     let userBookings = this.findBookings(passedId, passedBookData);
     let grandTotal = userBookings.reduce((total, booking) => {
-       passedRoomData.forEach(room => {
-        if(booking.roomNumber === room.number) {
+      passedRoomData.forEach(room => {
+        if (booking.roomNumber === room.number) {
           total += room.costPerNight
         }
       })
