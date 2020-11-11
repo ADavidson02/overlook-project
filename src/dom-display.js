@@ -20,7 +20,6 @@ let guestTotalSpent = document.querySelector('.guest-total-spent');
 let searchedGuestResult = document.querySelector('.user-search-results')
 const searchDateResults = document.querySelector('.date-search-results');
 
-
 const domUpdates = { 
   todaysAvailable(date, passedBookingData) {
     let emptyRooms = booking.availableRoomAmount(date, passedBookingData.bookings);
@@ -168,7 +167,6 @@ const domUpdates = {
   showFiltered(filterInput) {
     searchDateResults.innerHTML = '';
     let filtered = room.filterType(filterInput, available)
-    console.log('filtered', filtered)
     if (filtered === undefined) {
       let displayFiltered =
       `
